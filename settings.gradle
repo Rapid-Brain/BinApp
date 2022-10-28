@@ -14,3 +14,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "BinApp"
 include ':app'
+include ':ui'
+include ':domain'
+include ':data'
+include ':core'
+include ':core:network'
