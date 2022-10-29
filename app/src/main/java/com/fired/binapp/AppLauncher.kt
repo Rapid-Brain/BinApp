@@ -1,5 +1,6 @@
 package com.fired.binapp
 
+import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 /**
@@ -8,5 +9,5 @@ import dagger.hilt.android.HiltAndroidApp
  */
 
 @HiltAndroidApp
-class AppLauncher {
+class AppLauncher : Application() {
 }

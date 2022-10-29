@@ -8,11 +8,11 @@ plugins {
 
 android {
     namespace = AppConfig.namespace
-    compileSdk =AppConfig.compileSdk
+    compileSdk = AppConfig.compileSdk
 
     defaultConfig {
         applicationId = AppConfig.applicationId
-        minSdk= AppConfig.minSdk
+        minSdk = AppConfig.minSdk
         targetSdk = AppConfig.targetSdk
         versionCode = AppConfig.versionCode
         versionName = AppConfig.versionName
@@ -43,7 +43,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion = "1.3.2"
     }
     packagingOptions {
         resources {
@@ -53,11 +53,11 @@ android {
 }
 
 dependencies {
-
-    implementation(Dependencies.ANDROIDX_CORE_KTX)
+    androidxCore()
     lifecycle()
     compose()
-
+    composeMaterial()
+    composeNavigation()
     hilt()
     junit()
     espresso()

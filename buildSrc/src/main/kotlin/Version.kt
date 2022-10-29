@@ -6,13 +6,15 @@
 object Version {
     object Androidx {
         const val CORE_KTX = "1.9.0"
-        const val LIFECYCLE = "2.5.1"
+        const val LIFECYCLE = "2.6.0-alpha03"
     }
 
     object Compose{
         const val ACTIVITY_COMPOSE = "1.6.1"
         const val UI_VERSION = "1.3.0"
         const val MATERIAL = "1.3.0"
+        const val MATERIAL3 = "1.1.0-alpha01"
+        const val NAVIGATION = "2.6.0-alpha03"
     }
 
     object Hilt{
