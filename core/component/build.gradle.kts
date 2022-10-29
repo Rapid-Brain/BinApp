@@ -1,13 +1,10 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
-    id("com.google.dagger.hilt.android")
-
 }
 
 android {
-    namespace = "com.fired.network"
+    namespace = "com.fired.component"
     compileSdk = AppConfig.compileSdk
 
     defaultConfig {
@@ -26,6 +23,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -33,17 +31,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
     androidxCore()
-    hilt()
+    compose()
+    composeMaterial()
     junit()
     espresso()
 }

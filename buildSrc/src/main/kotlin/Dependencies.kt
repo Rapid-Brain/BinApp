@@ -17,8 +17,17 @@ object Dependencies {
         "androidx.compose.ui:ui-tooling-preview:${Version.Compose.UI_VERSION}"
     const val ANDROIDX_COMPOSE_UI_TOOLING =
         "androidx.compose.ui:ui-tooling:${Version.Compose.UI_VERSION}"
-    const val ANDROID_COMPOSE_MATERIAL =
+    const val ANDROIDX_COMPOSE_LIFECYCLE = "androidx.lifecycle:lifecycle-runtime-compose:${Version.Androidx.LIFECYCLE}"
+
+    const val COMPOSE_MATERIAL =
         "androidx.compose.material:material:${Version.Compose.MATERIAL}"
+    const val COMPOSE_MATERIAL3 =
+        "androidx.compose.material3:material3:${Version.Compose.MATERIAL3}"
+    const val COMPOSE_MATERIAL3_WINDOW_SIZE =
+        "androidx.compose.material3:material3-window-size-class:${Version.Compose.MATERIAL3}"
+
+    const val COMPOSE_NAVIGATION =
+        "androidx.navigation:navigation-compose:${Version.Compose.NAVIGATION}"
 
 
     const val HILT_ANDROID = "com.google.dagger:hilt-android:${Version.Hilt.HILT_ANDROID}"
@@ -35,13 +44,24 @@ object Dependencies {
         "androidx.compose.ui:ui-test-manifest:${Version.Compose.UI_VERSION}"
 }
 
+fun DependencyHandler.androidxCore() = implementation(Dependencies.ANDROIDX_CORE_KTX)
 
 fun DependencyHandler.compose() {
     implementation(Dependencies.ANDROID_ACTIVITY_COMPOSE)
     implementation(Dependencies.ANDROIDX_COMPOSE_PREVIEW)
-    implementation(Dependencies.ANDROID_COMPOSE_MATERIAL)
     implementation(Dependencies.ANDROIDX_COMPOSE_UI)
     implementation(Dependencies.ANDROIDX_COMPOSE_UI_TOOLING)
+    implementation(Dependencies.ANDROIDX_COMPOSE_LIFECYCLE)
+}
+
+fun DependencyHandler.composeNavigation() {
+    implementation(Dependencies.COMPOSE_NAVIGATION)
+}
+
+fun DependencyHandler.composeMaterial() {
+    implementation(Dependencies.COMPOSE_MATERIAL)
+    implementation(Dependencies.COMPOSE_MATERIAL3)
+    implementation(Dependencies.COMPOSE_MATERIAL3_WINDOW_SIZE)
 }
 
 fun DependencyHandler.composeTest() {
@@ -61,9 +81,7 @@ fun DependencyHandler.junit() {
 
 fun DependencyHandler.espresso() = androidTestImplementation(Dependencies.ANDROIDX_ESPRESSO_CORE)
 
-fun DependencyHandler.lifecycle() {
-    implementation(Dependencies.ANDROID_LIFECYCLE_RUNTIME)
-}
+fun DependencyHandler.lifecycle() = implementation(Dependencies.ANDROID_LIFECYCLE_RUNTIME)
 
 private fun DependencyHandler.kapt(depName: String) = add("kapt", depName)
 

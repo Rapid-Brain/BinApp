@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BinApp</string>
+    <string name="not_connected">No Internet connection</string>
 </resources>
