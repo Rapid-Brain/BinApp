@@ -13,7 +13,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "BinApp"
-include(":app"
-        , ":core"
-        , ":core:network")
-include(":core:component")
+include(
+    ":app", ":core", ":core:network", ":core:component"
+)

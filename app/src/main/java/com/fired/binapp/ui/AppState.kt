@@ -1,9 +1,6 @@
 package com.fired.binapp.ui
 
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.fired.network.NetworkMonitor
@@ -35,12 +32,14 @@ class AppState(
     networkMonitor: NetworkMonitor,
 ) {
 
+    var isOnlineViewVisible by mutableStateOf(false)
+
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
         .stateIn(
             scope = coroutineScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = false
+            initialValue = true
         )
 
 }

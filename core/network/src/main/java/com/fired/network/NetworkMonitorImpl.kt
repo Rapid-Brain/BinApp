@@ -16,10 +16,11 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import javax.inject.Inject
 
-class ConnectivityManagerNetworkMonitor @Inject constructor(
+class NetworkMonitorImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : NetworkMonitor {
-    override val isOnline: Flow<Boolean> = callbackFlow<Boolean> {
+
+    override val isOnline: Flow<Boolean> = callbackFlow {
         val callback = object : NetworkCallback() {
             override fun onAvailable(network: Network) {
                 channel.trySend(true)
@@ -31,7 +32,6 @@ class ConnectivityManagerNetworkMonitor @Inject constructor(
         }
 
         val connectivityManager = context.getSystemService<ConnectivityManager>()
-
         connectivityManager?.registerNetworkCallback(
             Builder()
                 .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)

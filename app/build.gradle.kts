@@ -43,7 +43,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        kotlinCompilerExtensionVersion = Version.KOTLIN_COMPILER_EXTENSION_VERSION
     }
     packagingOptions {
         resources {
@@ -64,4 +64,5 @@ dependencies {
     composeTest()
 
     implementation(project(":core:network"))
+    implementation(project(":core:component"))
 }

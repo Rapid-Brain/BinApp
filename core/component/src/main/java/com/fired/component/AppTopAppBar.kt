@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBar(
+fun ActionAppBar(
     @StringRes titleRes: Int,
     navigationIcon: ImageVector,
     navigationIconContentDescription: String?,
@@ -54,7 +54,7 @@ fun TopAppBar(
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBar(
+fun ActionAppBar(
     @StringRes titleRes: Int,
     actionIcon: ImageVector,
     actionIconContentDescription: String?,
@@ -82,7 +82,7 @@ fun TopAppBar(
 @Preview("Top App Bar")
 @Composable
 fun TopAppBarPreview() {
-    TopAppBar(
+    ActionAppBar(
         titleRes = android.R.string.untitled,
         navigationIcon = Icons.Default.Search,
         navigationIconContentDescription = "Navigation icon",

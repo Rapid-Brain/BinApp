@@ -1,6 +1,6 @@
 package com.fired.network.di
 
-import com.fired.network.ConnectivityManagerNetworkMonitor
+import com.fired.network.NetworkMonitorImpl
 import com.fired.network.NetworkMonitor
 import dagger.Binds
 import dagger.Module
@@ -17,6 +17,6 @@ interface NetworkModule {
 
     @Binds
     fun bindNetworkMonitor(
-        networkMonitor: ConnectivityManagerNetworkMonitor
+        networkMonitor: NetworkMonitorImpl
     ): NetworkMonitor
 }

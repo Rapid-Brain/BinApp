@@ -1,27 +1,28 @@
 package com.fired.binapp.ui
 
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.consumedWindowInsets
-import androidx.compose.foundation.layout.padding
+import androidx.compose.animation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fired.binapp.R
-import com.fired.binapp.navigation.AppNavigation
+import com.fired.binapp.ui.theme.NetStatusView
+import com.fired.component.ActionAppBar
+import com.fired.component.icon.Icons
 import com.fired.network.NetworkMonitor
+import kotlinx.coroutines.delay
 
 /**
  * @author yaya (@yahyalmh)
  * @since 29th October 2022
  */
-@OptIn(ExperimentalLifecycleComposeApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     networkMonitor: NetworkMonitor,
@@ -30,13 +31,26 @@ fun MainScreen(
     )
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
+    Column {
+        ObserveNetworkConnection(appState)
 
-    Scaffold(
-        contentColor = MaterialTheme.colors.onBackground,
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-    ) { padding ->
-        CheckNetworkConnection(appState, snackbarHostState)
-        SetupAppNavigation(appState, padding)
+        Scaffold(
+            contentColor = MaterialTheme.colors.onBackground,
+            snackbarHost = { SnackbarHost(snackbarHostState) },
+            topBar = {
+                ActionAppBar(
+                    modifier = Modifier.zIndex(-1F),
+                    titleRes = R.string.offline,
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = Color.Transparent
+                    ),
+                    actionIcon = Icons.Person,
+                    actionIconContentDescription = "Person"
+                )
+            }
+        ) { padding ->
+            SetupAppNavigation(appState, padding)
+        }
     }
 }
 
@@ -56,22 +70,11 @@ private fun SetupAppNavigation(
 
 @Composable
 @OptIn(ExperimentalLifecycleComposeApi::class)
-private fun CheckNetworkConnection(
-    appState: AppState,
-    snackbarHostState: SnackbarHostState
-) {
+private fun ObserveNetworkConnection(appState: AppState) {
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
 
-    val notConnected = stringResource(R.string.not_connected)
-    LaunchedEffect(isOffline) { if (isOffline) showSnackbar(snackbarHostState, notConnected) }
+    appState.isOnlineViewVisible = isOffline.not()
+
+    NetStatusView(appState, isOffline)
 }
 
-private suspend fun showSnackbar(
-    snackbarHostState: SnackbarHostState,
-    message: String
-) {
-    snackbarHostState.showSnackbar(
-        message = message,
-        duration = SnackbarDuration.Short
-    )
-}
