@@ -62,6 +62,7 @@ dependencies {
     junit()
     espresso()
     composeTest()
+    retrofit()
 
     implementation(project(":core:network"))
     implementation(project(":core:component"))

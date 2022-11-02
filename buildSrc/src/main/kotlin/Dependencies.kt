@@ -17,7 +17,8 @@ object Dependencies {
         "androidx.compose.ui:ui-tooling-preview:${Version.Compose.UI_VERSION}"
     const val ANDROIDX_COMPOSE_UI_TOOLING =
         "androidx.compose.ui:ui-tooling:${Version.Compose.UI_VERSION}"
-    const val ANDROIDX_COMPOSE_LIFECYCLE = "androidx.lifecycle:lifecycle-runtime-compose:${Version.Androidx.LIFECYCLE}"
+    const val ANDROIDX_COMPOSE_LIFECYCLE =
+        "androidx.lifecycle:lifecycle-runtime-compose:${Version.Androidx.LIFECYCLE}"
 
     const val COMPOSE_MATERIAL =
         "androidx.compose.material:material:${Version.Compose.MATERIAL}"
@@ -42,6 +43,19 @@ object Dependencies {
     const val COMPOSE_UI_TEST = "androidx.compose.ui:ui-test-junit4:${Version.Compose.UI_VERSION}"
     const val COMPOSE_UI_TEST_MANIFEST =
         "androidx.compose.ui:ui-test-manifest:${Version.Compose.UI_VERSION}"
+
+
+    const val RETROFIT = "com.squareup.retrofit2:retrofit:${Version.RETROFIT}"
+    const val RETROFIT_GSON_CONVERTER = "com.squareup.retrofit2:converter-gson:${Version.RETROFIT}"
+    const val GSON = "com.google.code.gson:gson:${Version.GSON}"
+
+    const val COROUTINES_CORE =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINES}"
+    const val COROUTINES_ANDROID =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.COROUTINES}"
+    const val COROUTINES_TEST =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-test:$${Version.COROUTINES}"
+
 }
 
 fun DependencyHandler.androidxCore() = implementation(Dependencies.ANDROIDX_CORE_KTX)
@@ -52,6 +66,18 @@ fun DependencyHandler.compose() {
     implementation(Dependencies.ANDROIDX_COMPOSE_UI)
     implementation(Dependencies.ANDROIDX_COMPOSE_UI_TOOLING)
     implementation(Dependencies.ANDROIDX_COMPOSE_LIFECYCLE)
+}
+
+fun DependencyHandler.coroutines() {
+    implementation(Dependencies.COROUTINES_CORE)
+    implementation(Dependencies.COROUTINES_ANDROID)
+    implementation(Dependencies.COROUTINES_TEST)
+}
+
+fun DependencyHandler.retrofit() {
+    implementation(Dependencies.RETROFIT)
+    implementation(Dependencies.RETROFIT_GSON_CONVERTER)
+    implementation(Dependencies.GSON)
 }
 
 fun DependencyHandler.composeNavigation() {

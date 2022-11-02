@@ -4,6 +4,15 @@
  */
 
 object Version {
+    const val ESPRESSO_CORE = "3.4.0"
+
+    const val KOTLIN_COMPILER_EXTENSION_VERSION = "1.3.2"
+
+    const val RETROFIT = "2.9.0"
+    const val GSON = "2.10"
+
+    const val COROUTINES = "1.6.4"
+
     object Androidx {
         const val CORE_KTX = "1.9.0"
         const val LIFECYCLE = "2.6.0-alpha03"
@@ -26,9 +35,4 @@ object Version {
         const val JUNIT = "4.13.2"
         const val ANDROIDX_JUNIT = "1.1.3"
     }
-
-    const val ESPRESSO_CORE = "3.4.0"
-
-    const val KOTLIN_COMPILER_EXTENSION_VERSION = "1.3.2"
-
 }

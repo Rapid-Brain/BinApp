@@ -41,7 +41,6 @@ fun NetStatusView(
         }
     }
 
-    Log.d("TAGG", "NetStatusView: $isOffline and isonlinevisibe: ${appState.isOnlineViewVisible}")
     OfflineView(isOffline = isOffline)
     OnlineView(appState.isOnlineViewVisible, isOnline = isOffline.not())
 }
