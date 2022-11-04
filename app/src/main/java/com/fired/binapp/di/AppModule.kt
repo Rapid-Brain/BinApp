@@ -15,7 +15,7 @@ class AppModule {
 
     companion object{
         const val baseUrlName = "BaseUrl"
-        const val BaseUrl = "127.0.0.1"
+        const val BaseUrl = "https://api.coincap.io/"
     }
 
     @Named(baseUrlName)

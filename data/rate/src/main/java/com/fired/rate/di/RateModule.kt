@@ -1,6 +1,6 @@
 package com.fired.rate.di
 
-import com.fired.rate.RateApi
+import com.fired.rate.api.ExchangeRateApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +18,7 @@ class RateModule {
 
     @Provides
     @Singleton
-    fun provideRateApi(retrofit: Retrofit): RateApi = retrofit.create(RateApi::class.java)
+    fun provideRateApi(retrofit: Retrofit): ExchangeRateApi = retrofit.create(ExchangeRateApi::class.java)
 
 
 }

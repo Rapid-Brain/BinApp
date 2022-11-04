@@ -48,14 +48,14 @@ object Dependencies {
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Version.RETROFIT}"
     const val RETROFIT_GSON_CONVERTER = "com.squareup.retrofit2:converter-gson:${Version.RETROFIT}"
     const val GSON = "com.google.code.gson:gson:${Version.GSON}"
+    const val OKHTTP_LOGGING = "com.squareup.okhttp3:logging-interceptor:${Version.OKHTTP_LOGGING}"
 
     const val COROUTINES_CORE =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINES}"
     const val COROUTINES_ANDROID =
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.COROUTINES}"
     const val COROUTINES_TEST =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-test:$${Version.COROUTINES}"
-
+        "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.COROUTINES}"
 }
 
 fun DependencyHandler.androidxCore() = implementation(Dependencies.ANDROIDX_CORE_KTX)
@@ -78,6 +78,7 @@ fun DependencyHandler.retrofit() {
     implementation(Dependencies.RETROFIT)
     implementation(Dependencies.RETROFIT_GSON_CONVERTER)
     implementation(Dependencies.GSON)
+    implementation(Dependencies.OKHTTP_LOGGING)
 }
 
 fun DependencyHandler.composeNavigation() {
