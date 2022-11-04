@@ -16,7 +16,11 @@
             <option value="$PROJECT_DIR$/core/component" />
             <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/data" />
-            <option value="$PROJECT_DIR$/data/rate" />
+            <option value="$PROJECT_DIR$/data/exchangerate" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/exchangerate" />
+            <option value="$PROJECT_DIR$/ui" />
+            <option value="$PROJECT_DIR$/ui/home" />
           </set>
         </option>
       </GradleProjectSettings>
