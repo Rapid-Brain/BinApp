@@ -1,3 +1,4 @@
+import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 /**
@@ -10,25 +11,25 @@ object Dependencies {
     const val ANDROID_LIFECYCLE_RUNTIME =
         "androidx.lifecycle:lifecycle-runtime-ktx:${Version.Androidx.LIFECYCLE}"
 
+    const val COMPOSE_BOM = "androidx.compose:compose-bom:${Version.Compose.BOM}"
     const val ANDROID_ACTIVITY_COMPOSE =
         "androidx.activity:activity-compose:${Version.Compose.ACTIVITY_COMPOSE}"
-    const val ANDROIDX_COMPOSE_UI = "androidx.compose.ui:ui:${Version.Compose.UI_VERSION}"
-    const val ANDROIDX_COMPOSE_PREVIEW =
-        "androidx.compose.ui:ui-tooling-preview:${Version.Compose.UI_VERSION}"
-    const val ANDROIDX_COMPOSE_UI_TOOLING =
-        "androidx.compose.ui:ui-tooling:${Version.Compose.UI_VERSION}"
+    const val ANDROIDX_COMPOSE_PREVIEW = "androidx.compose.ui:ui-tooling-preview"
+    const val ANDROIDX_COMPOSE_UI_TOOLING = "androidx.compose.ui:ui-tooling"
     const val ANDROIDX_COMPOSE_LIFECYCLE =
         "androidx.lifecycle:lifecycle-runtime-compose:${Version.Androidx.LIFECYCLE}"
-
-    const val COMPOSE_MATERIAL =
-        "androidx.compose.material:material:${Version.Compose.MATERIAL}"
-    const val COMPOSE_MATERIAL3 =
-        "androidx.compose.material3:material3:${Version.Compose.MATERIAL3}"
+    const val COMPOSE_UI = "androidx.compose.ui:ui"
+    const val COMPOSE_MATERIAL = "androidx.compose.material:material"
+    const val COMPOSE_MATERIAL3 = "androidx.compose.material3:material3"
     const val COMPOSE_MATERIAL3_WINDOW_SIZE =
-        "androidx.compose.material3:material3-window-size-class:${Version.Compose.MATERIAL3}"
-
+        "androidx.compose.material3:material3-window-size-class"
     const val COMPOSE_NAVIGATION =
         "androidx.navigation:navigation-compose:${Version.Compose.NAVIGATION}"
+    const val COMPOSE_VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-compose"
+    const val COMPOSE_HILT_NAVIGATION =
+        "androidx.hilt:hilt-navigation-compose:${Version.Compose.HILT_NAVIGATION}"
+    const val COMPOSE_UI_TEST = "androidx.compose.ui:ui-test-junit4"
+    const val COMPOSE_UI_TEST_MANIFEST = "androidx.compose.ui:ui-test-manifest"
 
 
     const val HILT_ANDROID = "com.google.dagger:hilt-android:${Version.Hilt.HILT_ANDROID}"
@@ -39,10 +40,6 @@ object Dependencies {
 
     const val ANDROIDX_ESPRESSO_CORE =
         "androidx.test.espresso:espresso-core:${Version.ESPRESSO_CORE}"
-
-    const val COMPOSE_UI_TEST = "androidx.compose.ui:ui-test-junit4:${Version.Compose.UI_VERSION}"
-    const val COMPOSE_UI_TEST_MANIFEST =
-        "androidx.compose.ui:ui-test-manifest:${Version.Compose.UI_VERSION}"
 
 
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Version.RETROFIT}"
@@ -61,11 +58,33 @@ object Dependencies {
 fun DependencyHandler.androidxCore() = implementation(Dependencies.ANDROIDX_CORE_KTX)
 
 fun DependencyHandler.compose() {
+    implementation(platform(Dependencies.COMPOSE_BOM))
+    implementation(Dependencies.COMPOSE_HILT_NAVIGATION)
     implementation(Dependencies.ANDROID_ACTIVITY_COMPOSE)
     implementation(Dependencies.ANDROIDX_COMPOSE_PREVIEW)
-    implementation(Dependencies.ANDROIDX_COMPOSE_UI)
     implementation(Dependencies.ANDROIDX_COMPOSE_UI_TOOLING)
     implementation(Dependencies.ANDROIDX_COMPOSE_LIFECYCLE)
+    implementation(Dependencies.COMPOSE_UI)
+}
+
+fun DependencyHandler.composeMaterial() {
+    implementation(Dependencies.COMPOSE_MATERIAL)
+    implementation(Dependencies.COMPOSE_MATERIAL3)
+    implementation(Dependencies.COMPOSE_MATERIAL3_WINDOW_SIZE)
+}
+
+fun DependencyHandler.composeTest() {
+    androidTestImplementation(platform(Dependencies.COMPOSE_BOM))
+    androidTestImplementation(Dependencies.COMPOSE_UI_TEST)
+    debugImplementation(Dependencies.COMPOSE_UI_TEST_MANIFEST)
+}
+
+fun DependencyHandler.composeNavigation() {
+    implementation(Dependencies.COMPOSE_NAVIGATION)
+}
+
+fun DependencyHandler.composeViewmodel() {
+    implementation(Dependencies.COMPOSE_VIEWMODEL)
 }
 
 fun DependencyHandler.coroutines() {
@@ -79,21 +98,6 @@ fun DependencyHandler.retrofit() {
     implementation(Dependencies.RETROFIT_GSON_CONVERTER)
     implementation(Dependencies.GSON)
     implementation(Dependencies.OKHTTP_LOGGING)
-}
-
-fun DependencyHandler.composeNavigation() {
-    implementation(Dependencies.COMPOSE_NAVIGATION)
-}
-
-fun DependencyHandler.composeMaterial() {
-    implementation(Dependencies.COMPOSE_MATERIAL)
-    implementation(Dependencies.COMPOSE_MATERIAL3)
-    implementation(Dependencies.COMPOSE_MATERIAL3_WINDOW_SIZE)
-}
-
-fun DependencyHandler.composeTest() {
-    androidTestImplementation(Dependencies.COMPOSE_UI_TEST)
-    debugImplementation(Dependencies.COMPOSE_UI_TEST_MANIFEST)
 }
 
 fun DependencyHandler.hilt() {
@@ -113,9 +117,13 @@ fun DependencyHandler.lifecycle() = implementation(Dependencies.ANDROID_LIFECYCL
 private fun DependencyHandler.kapt(depName: String) = add("kapt", depName)
 
 fun DependencyHandler.implementation(depName: String) = add("implementation", depName)
+fun DependencyHandler.implementation(dependency: Dependency) = add("implementation", dependency)
 
 fun DependencyHandler.androidTestImplementation(depName: String) =
     add("androidTestImplementation", depName)
+
+fun DependencyHandler.androidTestImplementation(dependency: Dependency) =
+    add("androidTestImplementation", dependency)
 
 fun DependencyHandler.testImplementation(depName: String) = add("testImplementation", depName)
 

@@ -12,11 +12,11 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fired.binapp.R
+import com.fired.binapp.nav.AppNavigation
 import com.fired.binapp.ui.theme.NetStatusView
 import com.fired.component.ActionAppBar
 import com.fired.component.icon.Icons
 import com.fired.network.NetworkMonitor
-import kotlinx.coroutines.delay
 
 /**
  * @author yaya (@yahyalmh)
@@ -60,12 +60,12 @@ private fun SetupAppNavigation(
     appState: AppState,
     padding: PaddingValues
 ) {
-//    AppNavigation(
-//        navController = appState.navController,
-//        modifier = Modifier
-//            .padding(padding)
-//            .consumedWindowInsets(padding)
-//    )
+    AppNavigation(
+        navController = appState.navController,
+        modifier = Modifier
+            .padding(padding)
+            .consumedWindowInsets(padding)
+    )
 }
 
 @Composable

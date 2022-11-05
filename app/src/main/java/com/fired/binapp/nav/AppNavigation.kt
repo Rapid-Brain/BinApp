@@ -1,10 +1,11 @@
-package com.fired.binapp.navigation
+package com.fired.binapp.nav
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.fired.home.nav.homeGraph
+import com.fired.home.nav.homeRoute
 
 /**
  * @author yaya (@yahyalmh)
@@ -14,7 +15,7 @@ import androidx.navigation.compose.NavHost
 fun AppNavigation(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    startDestination: String = "forYouNavigationRoute"
+    startDestination: String = homeRoute
 ) {
 
     NavHost(
@@ -22,6 +23,6 @@ fun AppNavigation(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-
+        homeGraph()
     }
 }
