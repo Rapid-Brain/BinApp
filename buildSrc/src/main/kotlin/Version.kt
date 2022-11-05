@@ -20,11 +20,14 @@ object Version {
     }
 
     object Compose {
+        const val BOM = "2022.10.00"
         const val ACTIVITY_COMPOSE = "1.6.1"
         const val UI_VERSION = "1.3.0"
         const val MATERIAL = "1.3.0"
         const val MATERIAL3 = "1.1.0-alpha01"
         const val NAVIGATION = "2.6.0-alpha03"
+        const val HILT_NAVIGATION = "1.0.0"
+        const val VIEWMODEL = "2.6.0-alpha03"
     }
 
     object Hilt {

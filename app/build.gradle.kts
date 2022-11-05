@@ -66,4 +66,5 @@ dependencies {
 
     implementation(project(":core:network"))
     implementation(project(":core:component"))
+    implementation(project(":ui:home"))
 }
