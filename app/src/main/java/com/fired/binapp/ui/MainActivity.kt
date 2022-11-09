@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.fired.binapp.ui.theme.BinAppTheme
-import com.fired.network.NetworkMonitor
+import com.fired.core2.network.NetworkMonitor
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

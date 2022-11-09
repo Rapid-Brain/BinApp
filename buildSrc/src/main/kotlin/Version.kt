@@ -8,9 +8,14 @@ object Version {
 
     const val KOTLIN_COMPILER_EXTENSION_VERSION = "1.3.2"
 
-    const val RETROFIT = "2.9.0"
-    const val OKHTTP_LOGGING = "5.0.0-alpha.8"
-    const val GSON = "2.10"
+    object Retrofit {
+        const val RETROFIT = "2.9.0"
+        const val OKHTTP_LOGGING = "5.0.0-alpha.8"
+        const val GSON = "2.10"
+        const val COROUTINES_ADAPTER = "0.9.2"
+    }
+
+    const val KOTLIN_REFLECTION = "1.7.20"
 
     const val COROUTINES = "1.6.4"
 

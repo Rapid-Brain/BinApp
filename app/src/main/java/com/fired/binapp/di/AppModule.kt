@@ -1,6 +1,7 @@
 package com.fired.binapp.di
 
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
@@ -18,6 +19,7 @@ class AppModule {
         const val BaseUrl = "https://api.coincap.io/"
     }
 
+    @Provides
     @Named(baseUrlName)
     fun provideBaseUrl() = BaseUrl
 }

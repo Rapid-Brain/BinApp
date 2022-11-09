@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName
 data class ExchangeRateModel(
     val id: String,
     val symbol: String,
-    val currencySymbol: String,
+    val currencySymbol: String?,
     val type: String,
     val rateUsd: String
 )

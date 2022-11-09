@@ -14,9 +14,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fired.binapp.R
 import com.fired.binapp.nav.AppNavigation
 import com.fired.binapp.ui.theme.NetStatusView
-import com.fired.component.ActionAppBar
-import com.fired.component.icon.Icons
-import com.fired.network.NetworkMonitor
+import com.fired.core2.component.ActionAppBar
+import com.fired.core2.component.icon.Icons
+import com.fired.core2.network.NetworkMonitor
 
 /**
  * @author yaya (@yahyalmh)

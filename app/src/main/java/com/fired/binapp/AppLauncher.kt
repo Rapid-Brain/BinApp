@@ -9,5 +9,4 @@ import dagger.hilt.android.HiltAndroidApp
  */
 
 @HiltAndroidApp
-class AppLauncher : Application() {
-}
+class AppLauncher : Application()

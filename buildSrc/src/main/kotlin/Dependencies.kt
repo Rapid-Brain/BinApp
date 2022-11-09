@@ -42,10 +42,14 @@ object Dependencies {
         "androidx.test.espresso:espresso-core:${Version.ESPRESSO_CORE}"
 
 
-    const val RETROFIT = "com.squareup.retrofit2:retrofit:${Version.RETROFIT}"
-    const val RETROFIT_GSON_CONVERTER = "com.squareup.retrofit2:converter-gson:${Version.RETROFIT}"
-    const val GSON = "com.google.code.gson:gson:${Version.GSON}"
-    const val OKHTTP_LOGGING = "com.squareup.okhttp3:logging-interceptor:${Version.OKHTTP_LOGGING}"
+    const val RETROFIT = "com.squareup.retrofit2:retrofit:${Version.Retrofit.RETROFIT}"
+    const val RETROFIT_GSON_CONVERTER =
+        "com.squareup.retrofit2:converter-gson:${Version.Retrofit.RETROFIT}"
+    const val GSON = "com.google.code.gson:gson:${Version.Retrofit.GSON}"
+    const val RETROFIT_COROUTINES_ADAPTER =
+        "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Version.Retrofit.COROUTINES_ADAPTER}"
+    const val OKHTTP_LOGGING =
+        "com.squareup.okhttp3:logging-interceptor:${Version.Retrofit.OKHTTP_LOGGING}"
 
     const val COROUTINES_CORE =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINES}"
@@ -53,9 +57,12 @@ object Dependencies {
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.COROUTINES}"
     const val COROUTINES_TEST =
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.COROUTINES}"
+
+    const val KOTLIN_REFLECTION = "org.jetbrains.kotlin:kotlin-reflect:${Version.KOTLIN_REFLECTION}"
 }
 
 fun DependencyHandler.androidxCore() = implementation(Dependencies.ANDROIDX_CORE_KTX)
+fun DependencyHandler.kotlinReflection() = runtimeOnly(Dependencies.KOTLIN_REFLECTION)
 
 fun DependencyHandler.compose() {
     implementation(platform(Dependencies.COMPOSE_BOM))
@@ -98,6 +105,7 @@ fun DependencyHandler.retrofit() {
     implementation(Dependencies.RETROFIT_GSON_CONVERTER)
     implementation(Dependencies.GSON)
     implementation(Dependencies.OKHTTP_LOGGING)
+    implementation(Dependencies.RETROFIT_COROUTINES_ADAPTER)
 }
 
 fun DependencyHandler.hilt() {
@@ -130,5 +138,6 @@ fun DependencyHandler.testImplementation(depName: String) = add("testImplementat
 fun DependencyHandler.debugImplementation(depName: String) = add("debugImplementation", depName)
 
 private fun DependencyHandler.compileOnly(depName: String) = add("compileOnly", depName)
+private fun DependencyHandler.runtimeOnly(depName: String) = add("runtimeOnly", depName)
 
 private fun DependencyHandler.api(depName: String) = add("api", depName)

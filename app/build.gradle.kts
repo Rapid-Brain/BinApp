@@ -63,8 +63,7 @@ dependencies {
     espresso()
     composeTest()
     retrofit()
+    implementation(project(":core"))
 
-    implementation(project(":core:network"))
-    implementation(project(":core:component"))
     implementation(project(":ui:home"))
 }

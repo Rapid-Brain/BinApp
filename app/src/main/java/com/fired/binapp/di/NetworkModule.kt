@@ -1,6 +1,7 @@
 package com.fired.binapp.di
 
-import com.fired.network.BuildConfig
+import com.fired.binapp.BuildConfig
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,11 +32,12 @@ class NetworkModule {
         httpClient: OkHttpClient,
         baseUrl: String
     ) = Retrofit
-            .Builder()
-            .client(httpClient)
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        .Builder()
+        .client(httpClient)
+        .baseUrl(baseUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .build()
 
     @Provides
     fun provideHttpClient(): OkHttpClient {

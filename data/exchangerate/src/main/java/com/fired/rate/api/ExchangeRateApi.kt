@@ -12,5 +12,5 @@ import retrofit2.http.GET
 interface ExchangeRateApi {
 
     @GET("v2/rates")
-    fun getExchangeRates(): Flow<ExchangeRatesModel>
+    suspend fun getExchangeRates(): ExchangeRatesModel
 }

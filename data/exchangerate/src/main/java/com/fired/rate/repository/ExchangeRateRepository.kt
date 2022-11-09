@@ -11,5 +11,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface ExchangeRateRepository {
 
-    fun getExchangeRates(): Flow<ExchangeRatesModel>
+     fun getExchangeRates(): Flow<ExchangeRatesModel>
 }

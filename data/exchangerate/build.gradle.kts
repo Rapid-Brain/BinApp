@@ -39,4 +39,5 @@ dependencies {
     coroutines()
     hilt()
     junit()
+    implementation(project(":core"))
 }

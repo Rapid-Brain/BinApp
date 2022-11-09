@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.fired.ui.home"
+    namespace = "com.fired.core"
     compileSdk = AppConfig.compileSdk
 
     defaultConfig {
@@ -14,6 +14,13 @@ android {
         targetSdk = AppConfig.targetSdk
 
         testInstrumentationRunner = AppConfig.androidTestInstrumentation
+    }
+
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Version.KOTLIN_COMPILER_EXTENSION_VERSION
     }
 
     buildTypes {
@@ -32,21 +39,13 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Version.KOTLIN_COMPILER_EXTENSION_VERSION
-    }
 }
 
 dependencies {
+    androidxCore()
     compose()
-    composeNavigation()
-    composeViewmodel()
     composeMaterial()
+    junit()
+    espresso()
     hilt()
-
-    implementation(project(":data:exchangerate"))
-    implementation(project(":core"))
 }
