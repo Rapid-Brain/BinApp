@@ -10,4 +10,5 @@ import kotlinx.coroutines.flow.Flow
 interface ExchangeRateInteractor {
     fun getRates(): Flow<List<ExchangeRate>>
     fun getLiveRates(interval: Long): Flow<List<ExchangeRate>>
+    fun getLiveRate(id: String, interval: Long = 3000L): Flow<ExchangeDetailRate>
 }

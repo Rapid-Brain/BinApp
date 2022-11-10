@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.fired.detail.nav.detailGraph
 import com.fired.home.nav.homeGraph
 import com.fired.home.nav.homeRoute
 
@@ -23,6 +24,7 @@ fun AppNavigation(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        homeGraph()
+        homeGraph(navController)
+        detailGraph()
     }
 }

@@ -17,5 +17,6 @@ include(
     ":app",
     ":core",
     ":data:exchangerate",
-    ":ui:home"
+    ":ui:home",
+    ":ui:detail"
 )

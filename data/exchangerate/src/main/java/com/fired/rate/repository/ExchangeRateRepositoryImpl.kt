@@ -1,6 +1,7 @@
 package com.fired.rate.repository
 
 import com.fired.rate.api.ExchangeRateApi
+import com.fired.rate.model.ExchangeRateDetailModel
 import com.fired.rate.model.ExchangeRatesModel
 import javax.inject.Inject
 
@@ -14,4 +15,6 @@ class ExchangeRateRepositoryImpl @Inject constructor(private val exchangeRateApi
 
     override suspend fun getExchangeRates(): ExchangeRatesModel = exchangeRateApi.getExchangeRates()
 
+    override suspend fun getExchangeRate(id: String): ExchangeRateDetailModel =
+        exchangeRateApi.getExchangeRate(id)
 }

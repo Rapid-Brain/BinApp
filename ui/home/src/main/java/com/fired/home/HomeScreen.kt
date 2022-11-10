@@ -4,11 +4,14 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +23,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.fired.core2.component.ErrorView
+import com.fired.core2.component.Loading
+import com.fired.detail.nav.navigateToDetail
 import com.fired.rate.interactor.ExchangeRate
 
 /**
@@ -29,6 +36,7 @@ import com.fired.rate.interactor.ExchangeRate
 
 @Composable
 fun HomeScreen(
+    navController: NavHostController,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -41,17 +49,18 @@ fun HomeScreen(
 
     LazyColumn(modifier = modifier.padding(vertical = 4.dp)) {
         items(state.value.rates) { rate ->
-            RateCell(rate)
+            RateCell(rate) { navController.navigateToDetail(rate.id) }
         }
     }
-
 }
 
 @Composable
-private fun RateCell(rate: ExchangeRate) {
+private fun RateCell(rate: ExchangeRate, onClick: () -> Unit) {
     Card(
         backgroundColor = MaterialTheme.colors.primary,
-        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+        modifier = Modifier
+            .clickable { onClick.invoke() }
+            .padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
         Row(
             modifier = Modifier
@@ -64,8 +73,7 @@ private fun RateCell(rate: ExchangeRate) {
                 )
         ) {
             Row(
-                modifier = Modifier
-                    .weight(1f),
+                modifier = Modifier.weight(1f),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
@@ -102,42 +110,6 @@ private fun RateCell(rate: ExchangeRate) {
     }
 }
 
-@Composable
-fun ErrorView(isError: Boolean, errorMessage: String, onRetry: () -> Unit) {
-    if (isError) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            Text(modifier = Modifier.padding(4.dp), text = errorMessage)
-            Button(modifier = Modifier.padding(top = 10.dp), onClick = onRetry) {
-                Text(modifier = Modifier.padding(4.dp), text = "Retry")
-            }
-        }
-    }
-}
-
-@Composable
-fun Loading(isLoading: Boolean) {
-    if (isLoading) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            CircularProgressIndicator()
-        }
-    }
-}
-
-@Preview
-@Composable
-fun ErrorViewPreview() {
-    ErrorView(isError = true, errorMessage = "This is a error message") {}
-}
-
 @Preview
 @Composable
 fun RateCellPreview() {
@@ -148,5 +120,5 @@ fun RateCellPreview() {
         type = "fiat",
         rateUsd = 0.165451654889.toBigDecimal()
     )
-    RateCell(rate = rate)
+    RateCell(rate = rate) {}
 }

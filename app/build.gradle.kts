@@ -63,7 +63,8 @@ dependencies {
     espresso()
     composeTest()
     retrofit()
-    implementation(project(":core"))
 
+    implementation(project(":core"))
     implementation(project(":ui:home"))
+    implementation(project(":ui:detail"))
 }
