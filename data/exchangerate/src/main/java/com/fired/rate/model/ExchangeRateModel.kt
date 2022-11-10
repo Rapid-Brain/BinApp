@@ -17,5 +17,11 @@ data class ExchangeRateModel(
 
 data class ExchangeRatesModel(
     @SerializedName("data")
-     val rates: List<ExchangeRateModel>
+    val rates: List<ExchangeRateModel>
+)
+
+data class ExchangeRateDetailModel(
+    @SerializedName("data")
+    val rateDetail: ExchangeRateModel,
+    val timestamp: String
 )

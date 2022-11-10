@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.fired.ui.home"
+    namespace = "com.fired.detail"
     compileSdk = AppConfig.compileSdk
 
     defaultConfig {
@@ -46,8 +46,8 @@ dependencies {
     composeViewmodel()
     composeMaterial()
     hilt()
+    junit()
 
     implementation(project(":data:exchangerate"))
     implementation(project(":core"))
-    implementation(project(":ui:detail"))
 }

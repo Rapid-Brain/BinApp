@@ -1,5 +1,6 @@
 package com.fired.rate.repository
 
+import com.fired.rate.model.ExchangeRateDetailModel
 import com.fired.rate.model.ExchangeRatesModel
 
 
@@ -9,6 +10,7 @@ import com.fired.rate.model.ExchangeRatesModel
  */
 
 interface ExchangeRateRepository {
-
     suspend fun getExchangeRates(): ExchangeRatesModel
+
+    suspend fun getExchangeRate(id: String): ExchangeRateDetailModel
 }
