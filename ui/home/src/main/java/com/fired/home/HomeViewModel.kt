@@ -19,10 +19,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    exchangeRateInteractor: ExchangeRateInteractor
+    private val exchangeRateInteractor: ExchangeRateInteractor
 ) : BaseViewModel<HomeUiState, HomeUiEvent>(initialStat = HomeUiState.initState) {
 
     init {
+        fetchRates()
+    }
+
+    private fun fetchRates() {
         val liveRateFetchInterval = 3000L
         exchangeRateInteractor
             .getLiveRates(liveRateFetchInterval)
@@ -42,7 +46,15 @@ class HomeViewModel @Inject constructor(
 
     override fun onEvent(event: HomeUiEvent) {
         when (event) {
-            HomeUiEvent.Retry -> println("RETRY")
+            HomeUiEvent.Retry -> {
+                fetchRates()
+                setState(
+                    state.value.copy(
+                        isLoading = true,
+                        isError = false,
+                    )
+                )
+            }
         }
     }
 }
