@@ -1,7 +1,6 @@
 package com.fired.rate.repository
 
 import com.fired.rate.model.ExchangeRatesModel
-import kotlinx.coroutines.flow.Flow
 
 
 /**
@@ -11,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface ExchangeRateRepository {
 
-     fun getExchangeRates(): Flow<ExchangeRatesModel>
+    suspend fun getExchangeRates(): ExchangeRatesModel
 }

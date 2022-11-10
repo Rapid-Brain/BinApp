@@ -23,8 +23,9 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel<HomeUiState, HomeUiEvent>(initialStat = HomeUiState.initState) {
 
     init {
+        val liveRateFetchInterval = 3000L
         exchangeRateInteractor
-            .getExchangeRates()
+            .getLiveRates(liveRateFetchInterval)
             .catch { e ->
                 val errorMessage = e.message ?: "Error while fetching the exchange rates"
                 setState(
@@ -35,7 +36,7 @@ class HomeViewModel @Inject constructor(
                     )
                 )
             }.onEach {
-                setState(state.value.copy(rates = it, isLoading = false))
+                setState(state.value.copy(rates = it, isError = false, isLoading = false))
             }.launchIn(viewModelScope)
     }
 

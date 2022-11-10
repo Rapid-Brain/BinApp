@@ -8,5 +8,6 @@ import kotlinx.coroutines.flow.Flow
  */
 
 interface ExchangeRateInteractor {
-    fun getExchangeRates(): Flow<List<ExchangeRate>>
+    fun getRates(): Flow<List<ExchangeRate>>
+    fun getLiveRates(interval: Long): Flow<List<ExchangeRate>>
 }
