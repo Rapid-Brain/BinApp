@@ -1,10 +1,10 @@
 package com.fired.binapp.di
 
+import com.fired.binapp.util.ApiConstant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Named
 
 /**
  * @author yaya (@yahyalmh)
@@ -14,12 +14,6 @@ import javax.inject.Named
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
-    companion object{
-        const val baseUrlName = "BaseUrl"
-        const val BaseUrl = "https://api.coincap.io/"
-    }
-
     @Provides
-    @Named(baseUrlName)
-    fun provideBaseUrl() = BaseUrl
+    fun provideBaseUrl() = ApiConstant.BaseUrl
 }

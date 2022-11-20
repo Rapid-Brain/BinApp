@@ -10,7 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Named
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 /**
@@ -22,10 +22,21 @@ import javax.inject.Singleton
 class NetworkModule {
 
     @Provides
+    fun provideHttpClient(): OkHttpClient = if (BuildConfig.DEBUG) {
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(logging)
+            .build()
+    } else OkHttpClient.Builder().build()
+
+    @Provides
     @Singleton
     fun providesRetrofit(
         httpClient: OkHttpClient,
-        @Named("BaseUrl") baseUrl: String
+        baseUrl: String
     ): Retrofit = retrofit(httpClient, baseUrl)
 
     private fun retrofit(
@@ -38,15 +49,4 @@ class NetworkModule {
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
-
-    @Provides
-    fun provideHttpClient(): OkHttpClient {
-        val builder = OkHttpClient.Builder()
-        if (BuildConfig.DEBUG) {
-            val logging = HttpLoggingInterceptor()
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-            builder.addInterceptor(logging)
-        }
-        return builder.build()
-    }
 }
