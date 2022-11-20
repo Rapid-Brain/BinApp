@@ -30,6 +30,8 @@ object Dependencies {
         "androidx.hilt:hilt-navigation-compose:${Version.Compose.HILT_NAVIGATION}"
     const val COMPOSE_UI_TEST = "androidx.compose.ui:ui-test-junit4"
     const val COMPOSE_UI_TEST_MANIFEST = "androidx.compose.ui:ui-test-manifest"
+    const val COMPOSE_CONSTRAINTLAYOUT =
+        "androidx.constraintlayout:constraintlayout-compose:${Version.Compose.CONSTRAINTLAYOUT}"
 
 
     const val HILT_ANDROID = "com.google.dagger:hilt-android:${Version.Hilt.HILT_ANDROID}"
@@ -92,6 +94,10 @@ fun DependencyHandler.composeNavigation() {
 
 fun DependencyHandler.composeViewmodel() {
     implementation(Dependencies.COMPOSE_VIEWMODEL)
+}
+
+fun DependencyHandler.composeConstraintlayout() {
+    implementation(Dependencies.COMPOSE_CONSTRAINTLAYOUT)
 }
 
 fun DependencyHandler.coroutines() {

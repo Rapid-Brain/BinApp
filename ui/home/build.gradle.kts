@@ -45,6 +45,7 @@ dependencies {
     composeNavigation()
     composeViewmodel()
     composeMaterial()
+    composeConstraintlayout()
     hilt()
 
     implementation(project(":data:exchangerate"))

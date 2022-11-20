@@ -25,6 +25,7 @@ object Version {
     }
 
     object Compose {
+        const val CONSTRAINTLAYOUT = "1.0.1"
         const val BOM = "2022.10.00"
         const val ACTIVITY_COMPOSE = "1.6.1"
         const val UI_VERSION = "1.3.0"
