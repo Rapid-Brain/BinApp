@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val exchangeRateInteractor: ExchangeRateInteractor
-) : BaseViewModel<HomeUiState, HomeUiEvent>(initialStat = HomeUiState.initState) {
+) : BaseViewModel<HomeUiState, HomeUiEvent>(HomeUiState.initState) {
 
     init {
         fetchRates()

@@ -10,10 +10,9 @@ import androidx.lifecycle.ViewModel
  * @since 29th September 2022
  */
 
-abstract class BaseViewModel<T : UIState, E : UIEvent>(initialStat: T) : ViewModel() {
-    private var internalSate: MutableState<T> = mutableStateOf(initialStat)
+abstract class BaseViewModel<T : UIState, E : UIEvent>(initialState: T) : ViewModel() {
+    private var internalSate: MutableState<T> = mutableStateOf(initialState)
     var state: State<T> = internalSate
-
 
     abstract fun onEvent(event: E)
 
