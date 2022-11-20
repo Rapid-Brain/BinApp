@@ -16,8 +16,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.fired.core2.component.ErrorView
-import com.fired.core2.component.Loading
+import com.fired.core.component.ErrorView
+import com.fired.core.component.Loading
 import com.fired.rate.interactor.ExchangeDetailRate
 
 /**
@@ -53,7 +53,6 @@ private fun ContentView(
         ) {
             Box(
                 modifier = Modifier
-                    .shadow(10.dp)
                     .clip(CircleShape)
                     .size(150.dp)
                     .background(Color.Blue)
@@ -89,7 +88,7 @@ private fun ContentView(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ContentPreview() {
     val rateDetail = ExchangeDetailRate(

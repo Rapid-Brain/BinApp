@@ -1,4 +1,4 @@
-package com.fired.core2
+package com.fired.core
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

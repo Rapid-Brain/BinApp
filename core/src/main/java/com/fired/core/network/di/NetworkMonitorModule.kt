@@ -1,7 +1,7 @@
-package com.fired.core2.network.di
+package com.fired.core.network.di
 
-import com.fired.core2.network.NetworkMonitor
-import com.fired.core2.network.NetworkMonitorImpl
+import com.fired.core.network.NetworkMonitor
+import com.fired.core.network.NetworkMonitorImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

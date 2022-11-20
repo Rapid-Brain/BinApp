@@ -1,4 +1,4 @@
-package com.fired.core2.ext
+package com.fired.core.ext
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

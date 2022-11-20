@@ -3,7 +3,7 @@ package com.fired.binapp.ui
 import androidx.compose.runtime.*
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.fired.core2.network.NetworkMonitor
+import com.fired.core.network.NetworkMonitor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.stateIn
 
 @Composable
 fun rememberAppState(
-    networkMonitor: com.fired.core2.network.NetworkMonitor,
+    networkMonitor: NetworkMonitor,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navController: NavHostController = rememberNavController()
 ): AppState {
@@ -25,13 +25,11 @@ fun rememberAppState(
     }
 }
 
-
 class AppState(
     val navController: NavHostController,
-    val coroutineScope: CoroutineScope,
-    networkMonitor: com.fired.core2.network.NetworkMonitor,
+    coroutineScope: CoroutineScope,
+    networkMonitor: NetworkMonitor,
 ) {
-
     var isOnlineViewVisible by mutableStateOf(false)
 
     val isOffline = networkMonitor.isOnline
@@ -41,5 +39,4 @@ class AppState(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = true
         )
-
 }

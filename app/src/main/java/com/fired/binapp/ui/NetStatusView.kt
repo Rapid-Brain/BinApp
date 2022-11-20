@@ -1,6 +1,5 @@
-package com.fired.binapp.ui.theme
+package com.fired.binapp.ui
 
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,10 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.fired.binapp.R
-import com.fired.binapp.ui.AppState
 import kotlinx.coroutines.delay
 
 /**
@@ -111,17 +107,6 @@ fun OnlineView(isOnlineViewVisible: Boolean, isOnline: Boolean) {
                 textAlign = TextAlign.Center,
                 text = message
             )
-        }
-    }
-}
-
-
-@Preview(widthDp = 250, heightDp = 360, backgroundColor = 4654654)
-@Composable
-fun TxtViewPreview() {
-    BinAppTheme {
-        Surface {
-//            NetStatusView(isOffline = true)
         }
     }
 }

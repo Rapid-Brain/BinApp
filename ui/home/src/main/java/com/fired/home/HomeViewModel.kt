@@ -1,9 +1,9 @@
 package com.fired.home
 
 import androidx.lifecycle.viewModelScope
-import com.fired.core2.base.BaseViewModel
-import com.fired.core2.base.UIEvent
-import com.fired.core2.base.UIState
+import com.fired.core.base.BaseViewModel
+import com.fired.core.base.UIEvent
+import com.fired.core.base.UIState
 import com.fired.rate.interactor.ExchangeRate
 import com.fired.rate.interactor.ExchangeRateInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel

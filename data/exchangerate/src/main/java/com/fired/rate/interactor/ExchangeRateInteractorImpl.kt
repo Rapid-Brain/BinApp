@@ -1,6 +1,6 @@
 package com.fired.rate.interactor
 
-import com.fired.core2.ext.repeatFlow
+import com.fired.core.ext.repeatFlow
 import com.fired.rate.repository.ExchangeRateRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

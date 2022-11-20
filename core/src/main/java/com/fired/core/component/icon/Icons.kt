@@ -1,4 +1,4 @@
-package com.fired.core2.component.icon
+package com.fired.core.component.icon
 
 import androidx.annotation.DrawableRes
 import androidx.compose.material.icons.Icons

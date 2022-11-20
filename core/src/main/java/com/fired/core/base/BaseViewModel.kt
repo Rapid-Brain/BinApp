@@ -1,4 +1,4 @@
-package com.fired.core2.base
+package com.fired.core.base
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
