@@ -26,7 +26,6 @@ interface ExchangeRateModule {
         @Singleton
         fun provideExchangeRateApi(retrofit: Retrofit): ExchangeRateApi =
             retrofit.create(ExchangeRateApi::class.java)
-
     }
 
     @Binds
@@ -35,5 +34,4 @@ interface ExchangeRateModule {
 
     @Binds
     fun bindExchangeInteractor(exchangeRateInteractor: ExchangeRateInteractorImpl): ExchangeRateInteractor
-
 }

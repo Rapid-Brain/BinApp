@@ -21,12 +21,11 @@ class ExchangeRateInteractorImpl @Inject constructor(private val exchangeRateRep
     override fun getLiveRates(interval: Long) =
         repeatFlow(interval) { exchangeRates() }.flowOn(Dispatchers.IO)
 
-    override fun getLiveRate(id: String, interval:Long): Flow<ExchangeDetailRate> =
+    override fun getLiveRate(id: String, interval: Long): Flow<ExchangeDetailRate> =
         repeatFlow(interval) { exchangeRateRepository.getExchangeRate(id).toExternalModel() }
             .flowOn(Dispatchers.IO)
 
     private suspend fun exchangeRates() = exchangeRateRepository.getExchangeRates()
         .rates.map { rate -> rate.toExternalModel() }
-        .sortedByDescending {  it.symbol }
-
+        .sortedByDescending { it.symbol }
 }
