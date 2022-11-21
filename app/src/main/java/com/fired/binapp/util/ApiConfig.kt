@@ -1,5 +1,5 @@
 package com.fired.binapp.util
 
-object ApiConstant {
+object ApiConfig {
     const val BaseUrl = "https://api.coincap.io/"
 }
