@@ -1,6 +1,7 @@
 package com.fired.binapp.di
 
 import com.fired.binapp.BuildConfig
+import com.fired.binapp.util.ApiConfig
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -22,6 +23,9 @@ import javax.inject.Singleton
 class NetworkModule {
 
     @Provides
+    fun provideBaseUrl() = ApiConfig.BaseUrl
+
+    @Provides
     fun provideHttpClient(): OkHttpClient = if (BuildConfig.DEBUG) {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -37,15 +41,10 @@ class NetworkModule {
     fun providesRetrofit(
         httpClient: OkHttpClient,
         baseUrl: String
-    ): Retrofit = retrofit(httpClient, baseUrl)
-
-    private fun retrofit(
-        httpClient: OkHttpClient,
-        baseUrl: String
-    ) = Retrofit
+    ): Retrofit = Retrofit
         .Builder()
-        .client(httpClient)
         .baseUrl(baseUrl)
+        .client(httpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
