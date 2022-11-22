@@ -1,4 +1,4 @@
-package com.fired.core2.component
+package com.fired.core.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +27,7 @@ fun Loading(isLoading: Boolean) {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun LoadingPreview() {
     Loading(isLoading = true)

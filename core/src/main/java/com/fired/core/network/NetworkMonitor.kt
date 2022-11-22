@@ -1,4 +1,4 @@
-package com.fired.core2.network
+package com.fired.core.network
 
 import kotlinx.coroutines.flow.Flow
 

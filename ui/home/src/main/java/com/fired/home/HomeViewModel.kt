@@ -1,9 +1,10 @@
 package com.fired.home
 
 import androidx.lifecycle.viewModelScope
-import com.fired.core2.base.BaseViewModel
-import com.fired.core2.base.UIEvent
-import com.fired.core2.base.UIState
+import com.fired.core.base.BaseViewModel
+import com.fired.core.base.UIEvent
+import com.fired.core.base.UIState
+import com.fired.home.util.Constant
 import com.fired.rate.interactor.ExchangeRate
 import com.fired.rate.interactor.ExchangeRateInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,28 +21,30 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val exchangeRateInteractor: ExchangeRateInteractor
-) : BaseViewModel<HomeUiState, HomeUiEvent>(initialStat = HomeUiState.initState) {
+) : BaseViewModel<HomeUiState, HomeUiEvent>(HomeUiState.initState) {
 
     init {
         fetchRates()
     }
 
     private fun fetchRates() {
-        val liveRateFetchInterval = 3000L
         exchangeRateInteractor
-            .getLiveRates(liveRateFetchInterval)
-            .catch { e ->
-                val errorMessage = e.message ?: "Error while fetching the exchange rates"
-                setState(
-                    state.value.copy(
-                        isLoading = false,
-                        isError = true,
-                        errorMessage = errorMessage
-                    )
-                )
-            }.onEach {
+            .getLiveRates(Constant.liveRateFetchInterval)
+            .catch { e -> handleCatch(e) }
+            .onEach {
                 setState(state.value.copy(rates = it, isError = false, isLoading = false))
             }.launchIn(viewModelScope)
+    }
+
+    private fun handleCatch(e: Throwable) {
+        val errorMessage = e.message ?: "Error while fetching the exchange rates"
+        setState(
+            state.value.copy(
+                isLoading = false,
+                isError = true,
+                errorMessage = errorMessage
+            )
+        )
     }
 
     override fun onEvent(event: HomeUiEvent) {
@@ -49,10 +52,7 @@ class HomeViewModel @Inject constructor(
             HomeUiEvent.Retry -> {
                 fetchRates()
                 setState(
-                    state.value.copy(
-                        isLoading = true,
-                        isError = false,
-                    )
+                    state.value.copy(isLoading = true, isError = false)
                 )
             }
         }

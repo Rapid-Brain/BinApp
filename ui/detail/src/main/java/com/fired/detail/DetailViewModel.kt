@@ -2,12 +2,11 @@ package com.fired.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.fired.core2.base.BaseViewModel
-import com.fired.core2.base.UIEvent
-import com.fired.core2.base.UIState
+import com.fired.core.base.BaseViewModel
+import com.fired.core.base.UIEvent
+import com.fired.core.base.UIState
 import com.fired.detail.nav.DetailArgs
 import com.fired.rate.interactor.ExchangeDetailRate
-import com.fired.rate.interactor.ExchangeRate
 import com.fired.rate.interactor.ExchangeRateInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch

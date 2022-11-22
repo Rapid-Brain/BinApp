@@ -1,4 +1,4 @@
-package com.fired.core2
+package com.fired.core
 
 import org.junit.Test
 

@@ -1,6 +1,7 @@
 package com.fired.binapp.di
 
 import com.fired.binapp.BuildConfig
+import com.fired.binapp.util.ApiConfig
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -10,7 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Named
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 /**
@@ -22,31 +23,29 @@ import javax.inject.Singleton
 class NetworkModule {
 
     @Provides
+    fun provideBaseUrl() = ApiConfig.BaseUrl
+
+    @Provides
+    fun provideHttpClient(): OkHttpClient = if (BuildConfig.DEBUG) {
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(logging)
+            .build()
+    } else OkHttpClient.Builder().build()
+
+    @Provides
     @Singleton
     fun providesRetrofit(
         httpClient: OkHttpClient,
-        @Named("BaseUrl") baseUrl: String
-    ): Retrofit = retrofit(httpClient, baseUrl)
-
-    private fun retrofit(
-        httpClient: OkHttpClient,
         baseUrl: String
-    ) = Retrofit
+    ): Retrofit = Retrofit
         .Builder()
-        .client(httpClient)
         .baseUrl(baseUrl)
+        .client(httpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
-
-    @Provides
-    fun provideHttpClient(): OkHttpClient {
-        val builder = OkHttpClient.Builder()
-        if (BuildConfig.DEBUG) {
-            val logging = HttpLoggingInterceptor()
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-            builder.addInterceptor(logging)
-        }
-        return builder.build()
-    }
 }

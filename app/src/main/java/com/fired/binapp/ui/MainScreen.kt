@@ -13,10 +13,9 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fired.binapp.R
 import com.fired.binapp.nav.AppNavigation
-import com.fired.binapp.ui.theme.NetStatusView
-import com.fired.core2.component.ActionAppBar
-import com.fired.core2.component.icon.Icons
-import com.fired.core2.network.NetworkMonitor
+import com.fired.core.component.ActionAppBar
+import com.fired.core.component.icon.Icons
+import com.fired.core.network.NetworkMonitor
 
 /**
  * @author yaya (@yahyalmh)
@@ -77,4 +76,3 @@ private fun ObserveNetworkConnection(appState: AppState) {
 
     NetStatusView(appState, isOffline)
 }
-

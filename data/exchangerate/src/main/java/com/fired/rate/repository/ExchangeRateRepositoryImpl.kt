@@ -15,6 +15,7 @@ class ExchangeRateRepositoryImpl @Inject constructor(private val exchangeRateApi
 
     override suspend fun getExchangeRates(): ExchangeRatesModel = exchangeRateApi.getExchangeRates()
 
-    override suspend fun getExchangeRate(id: String): ExchangeRateDetailModel =
-        exchangeRateApi.getExchangeRate(id)
+    override suspend fun getExchangeRate(id: String): ExchangeRateDetailModel {
+        return exchangeRateApi.getExchangeRate(id)
+    }
 }

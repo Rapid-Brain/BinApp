@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -24,8 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.fired.core2.component.ErrorView
-import com.fired.core2.component.Loading
+import com.fired.core.component.ErrorView
+import com.fired.core.component.Loading
 import com.fired.detail.nav.navigateToDetail
 import com.fired.rate.interactor.ExchangeRate
 
@@ -40,18 +39,24 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state
-    Loading(isLoading = state.value.isLoading)
-    ErrorView(
-        isError = state.value.isError,
-        errorMessage = state.value.errorMessage
-    ) { viewModel.onEvent(HomeUiEvent.Retry) }
+    val state = viewModel.state.value
+    Loading(isLoading = state.isLoading)
+
+    ErrorView(state, viewModel)
 
     LazyColumn(modifier = modifier.padding(vertical = 4.dp)) {
-        items(state.value.rates) { rate ->
+        items(state.rates) { rate ->
             RateCell(rate) { navController.navigateToDetail(rate.id) }
         }
     }
+}
+
+@Composable
+private fun ErrorView(state: HomeUiState, viewModel: HomeViewModel) {
+    ErrorView(
+        isError = state.isError,
+        errorMessage = state.errorMessage
+    ) { viewModel.onEvent(HomeUiEvent.Retry) }
 }
 
 @Composable
@@ -79,7 +84,6 @@ private fun RateCell(rate: ExchangeRate, onClick: () -> Unit) {
                 Box(
                     modifier = Modifier
                         .size(68.dp)
-                        .shadow(10.dp)
                         .clip(CircleShape)
                         .background(Color.Red),
                     contentAlignment = Alignment.Center
