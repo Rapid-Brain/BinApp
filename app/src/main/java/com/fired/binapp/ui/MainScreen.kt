@@ -38,8 +38,8 @@ fun MainScreen(
             snackbarHost = { SnackbarHost(snackbarHostState) },
             topBar = {
                 AppBar(
+                    titleRes = R.string.app_name,
                     modifier = Modifier.zIndex(-1F),
-                    titleRes = R.string.offline,
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                         containerColor = Color.Transparent
                     ),
