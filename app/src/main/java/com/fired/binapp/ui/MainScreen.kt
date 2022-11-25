@@ -13,7 +13,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fired.binapp.R
 import com.fired.binapp.nav.AppNavigation
-import com.fired.core.component.ActionAppBar
+import com.fired.core.component.AppBar
 import com.fired.core.component.icon.Icons
 import com.fired.core.network.NetworkMonitor
 
@@ -37,7 +37,7 @@ fun MainScreen(
             contentColor = MaterialTheme.colors.onBackground,
             snackbarHost = { SnackbarHost(snackbarHostState) },
             topBar = {
-                ActionAppBar(
+                AppBar(
                     modifier = Modifier.zIndex(-1F),
                     titleRes = R.string.offline,
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
