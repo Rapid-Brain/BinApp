@@ -27,17 +27,13 @@ import com.fired.core.component.Loading
 import com.fired.detail.nav.navigateToDetail
 import com.fired.rate.interactor.ExchangeRate
 
-/**
- * @author yaya (@yahyalmh)
- * @since 05th November 2022
- */
-
 @Composable
 fun HomeScreen(
     navController: NavHostController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+
     Loading(isLoading = state.isLoading)
 
     ErrorView(state, viewModel)
@@ -54,6 +50,19 @@ private fun ErrorView(state: HomeUiState, viewModel: HomeViewModel) {
         isError = state.isError,
         errorMessage = state.errorMessage
     ) { viewModel.onEvent(HomeUiEvent.Retry) }
+}
+
+@Composable
+private fun ContentView(
+    modifier: Modifier,
+    rates: List<ExchangeRate>,
+    onCellClick: (id: String) -> Unit
+) {
+    LazyColumn(modifier = modifier.padding(vertical = 4.dp)) {
+        items(rates) { rate ->
+            RateCell(rate) { onCellClick(rate.id) }
+        }
+    }
 }
 
 @Composable
@@ -114,12 +123,34 @@ private fun RateCell(rate: ExchangeRate, onClick: () -> Unit) {
 @Preview
 @Composable
 fun RateCellPreview() {
-    val rate = ExchangeRate(
+    val rate = rateStub()
+    RateCell(rate = rate) {}
+}
+
+@Composable
+@ReferenceDevices
+fun ContentPreview() {
+    val rates = ratesStub()
+    ContentView(modifier = Modifier, rates = rates, onCellClick = {})
+}
+
+@Composable
+private fun ratesStub(): MutableList<ExchangeRate> {
+    val rates = mutableListOf<ExchangeRate>()
+    val count = 20
+    repeat(count) {
+        rates.add(rateStub())
+    }
+    return rates
+}
+
+@Composable
+private fun rateStub(): ExchangeRate {
+    return ExchangeRate(
         id = "1",
         symbol = "$",
         currencySymbol = "#",
         type = "fiat",
         rateUsd = 0.165451654889.toBigDecimal()
     )
-    RateCell(rate = rate) {}
 }

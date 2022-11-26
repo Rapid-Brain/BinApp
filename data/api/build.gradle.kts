@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.fired.rate"
+    namespace = "com.fired.api"
     compileSdk = AppConfig.compileSdk
 
     defaultConfig {
@@ -25,10 +25,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -36,9 +38,6 @@ android {
 
 dependencies {
     retrofit()
-    coroutines()
     hilt()
     junit()
-    implementation(project(":core"))
-    implementation(project(":data:api"))
 }

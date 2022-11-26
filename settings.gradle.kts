@@ -18,5 +18,6 @@ include(
     ":core",
     ":data:exchangerate",
     ":ui:home",
-    ":ui:detail"
+    ":ui:detail",
+    ":data:api"
 )
