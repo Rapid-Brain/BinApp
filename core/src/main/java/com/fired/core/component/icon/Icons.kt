@@ -8,7 +8,7 @@ import androidx.compose.material.icons.rounded.*
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
- * Now in Android icons. Material icons are [ImageVector]s, custom icons are drawable resource IDs.
+ * Material icons are [ImageVector]s, custom icons are drawable resource IDs.
  */
 object Icons {
     val AccountCircle = Icons.Outlined.AccountCircle

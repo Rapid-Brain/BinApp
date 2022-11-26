@@ -6,8 +6,6 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -23,21 +21,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.fired.core.base.ReferenceDevices
+import com.fired.core.component.BaseLazyColumn
 import com.fired.core.component.ErrorView
 import com.fired.core.component.Loading
 import com.fired.detail.nav.navigateToDetail
 import com.fired.rate.interactor.ExchangeRate
 
-/**
- * @author yaya (@yahyalmh)
- * @since 05th November 2022
- */
-
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
@@ -46,7 +38,10 @@ fun HomeScreen(
 
     ErrorView(state, viewModel)
 
-    ContentView(modifier, state.rates) { id -> navController.navigateToDetail(id) }
+    BaseLazyColumn(
+        items = state.rates,
+        cell = { rate -> RateCell(rate) { navController.navigateToDetail(rate.id) } }
+    )
 }
 
 @Composable
