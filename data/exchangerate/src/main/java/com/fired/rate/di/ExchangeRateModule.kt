@@ -1,5 +1,6 @@
 package com.fired.rate.di
 
+import com.fired.api.CoinCapRetrofit
 import com.fired.rate.api.ExchangeRateApi
 import com.fired.rate.interactor.ExchangeRateInteractor
 import com.fired.rate.interactor.ExchangeRateInteractorImpl
@@ -10,7 +11,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 /**
@@ -24,8 +24,8 @@ interface ExchangeRateModule {
     companion object {
         @Provides
         @Singleton
-        fun provideExchangeRateApi(retrofit: Retrofit): ExchangeRateApi =
-            retrofit.create(ExchangeRateApi::class.java)
+        fun provideExchangeRateApi(coinCapRetrofit: CoinCapRetrofit): ExchangeRateApi =
+            coinCapRetrofit.create(ExchangeRateApi::class.java)
     }
 
     @Binds
