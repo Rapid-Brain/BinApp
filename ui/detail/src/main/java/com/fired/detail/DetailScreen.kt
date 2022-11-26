@@ -9,13 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.fired.core.base.ReferenceDevices
 import com.fired.core.component.ErrorView
 import com.fired.core.component.Loading
 import com.fired.rate.interactor.ExchangeDetailRate
@@ -31,7 +30,9 @@ fun DetailScreen(
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+
     Loading(isLoading = state.isLoading)
+
     ErrorView(
         isError = state.isError,
         errorMessage = state.errorMsg
@@ -88,8 +89,8 @@ private fun ContentView(
     }
 }
 
-@Preview(showBackground = true)
 @Composable
+@ReferenceDevices
 fun ContentPreview() {
     val rateDetail = ExchangeDetailRate(
         "Id",
@@ -99,5 +100,6 @@ fun ContentPreview() {
         rateUsd = 0.16544654.toBigDecimal(),
         timestamp = 1324654312
     )
-    ContentView(modifier = Modifier, state = DetailUiState.Loaded(rate = rateDetail))
+    val state = DetailUiState.Loaded(rateDetail)
+    ContentView(modifier = Modifier, state = state)
 }

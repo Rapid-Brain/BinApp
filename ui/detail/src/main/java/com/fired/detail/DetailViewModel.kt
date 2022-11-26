@@ -9,9 +9,7 @@ import com.fired.detail.nav.DetailArgs
 import com.fired.rate.interactor.ExchangeDetailRate
 import com.fired.rate.interactor.ExchangeRateInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 /**
