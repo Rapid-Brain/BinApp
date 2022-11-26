@@ -21,9 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.fired.core.component.BaseLazyColumn
 import com.fired.core.component.ErrorView
 import com.fired.core.component.Loading
-import com.fired.core.component.MyLazyColumn
 import com.fired.detail.nav.navigateToDetail
 import com.fired.rate.interactor.ExchangeRate
 
@@ -42,7 +42,7 @@ fun HomeScreen(
 
     ErrorView(state, viewModel)
 
-    MyLazyColumn(
+    BaseLazyColumn(
         items = state.rates,
         cell = { rate -> RateCell(rate) { navController.navigateToDetail(rate.id) } }
     )

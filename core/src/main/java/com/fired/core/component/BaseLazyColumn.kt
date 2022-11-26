@@ -8,14 +8,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun <T> MyLazyColumn(
+fun <T> BaseLazyColumn(
     modifier: Modifier = Modifier,
     items: List<T>,
     cell: @Composable (T) -> Unit
 ) {
-    LazyColumn(
-        modifier = modifier.padding(vertical = 4.dp)
-    ) {
+    LazyColumn(modifier = modifier.padding(vertical = 4.dp)) {
         items(items) { cell(it) }
     }
 }

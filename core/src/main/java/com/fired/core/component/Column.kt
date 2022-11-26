@@ -24,7 +24,7 @@ fun BaseColumn(
 }
 
 @Composable
-fun CenterColumn(
+fun BaseCenterColumn(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
