@@ -3,18 +3,21 @@ package com.fired.binapp.ui
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fired.binapp.R
 import com.fired.binapp.nav.AppNavigation
 import com.fired.core.component.AppBar
-import com.fired.core.component.icon.Icons
 import com.fired.core.network.NetworkMonitor
 
 /**
@@ -33,23 +36,28 @@ fun MainScreen(
     Column {
         ObserveNetworkConnection(appState)
 
-        Scaffold(
-            contentColor = MaterialTheme.colors.onBackground,
-            snackbarHost = { SnackbarHost(snackbarHostState) },
-            topBar = {
-                AppBar(
-                    titleRes = R.string.app_name,
-                    modifier = Modifier.zIndex(-1F),
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = Color.Transparent
-                    ),
-                    actionIcon = Icons.Person,
-                    actionIconContentDescription = "Person"
-                )
-            }
-        ) { padding ->
-            SetupAppNavigation(appState, padding)
-        }
+//        Scaffold(
+//            contentColor = MaterialTheme.colors.onBackground,
+//            snackbarHost = { SnackbarHost(snackbarHostState) },
+//            topBar = {
+//                AppBar(
+//                    titleRes = R.string.app_name,
+//                    modifier = Modifier.zIndex(-1F),
+//                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+//                        containerColor = Color.Transparent
+//                    ),
+//                    navigationIcon = Icons.Default.Menu,
+//                    navigationIconContentDescription = "Menu",
+//                    actionIcon = Icons.Default.Search,
+//                    actionIconContentDescription = "Search",
+//                    onNavigationClick = {}
+//                )
+//            }
+//        ) { padding ->
+//            SetupAppNavigation(appState, padding)
+//        }
+        SetupAppNavigation(appState)
+
     }
 }
 
@@ -57,7 +65,7 @@ fun MainScreen(
 @OptIn(ExperimentalLayoutApi::class)
 private fun SetupAppNavigation(
     appState: AppState,
-    padding: PaddingValues
+    padding:PaddingValues= PaddingValues.Absolute()
 ) {
     AppNavigation(
         navController = appState.navController,

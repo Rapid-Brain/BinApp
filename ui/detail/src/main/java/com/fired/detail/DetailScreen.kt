@@ -4,7 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,8 +18,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.fired.core.base.ReferenceDevices
+import com.fired.core.component.AppBar
 import com.fired.core.component.ErrorView
 import com.fired.core.component.Loading
 import com.fired.rate.interactor.ExchangeDetailRate
@@ -24,21 +32,40 @@ import com.fired.rate.interactor.ExchangeDetailRate
  * @since 10th November 2022
  */
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
 
-    Loading(isLoading = state.isLoading)
+    Scaffold(
+        contentColor = MaterialTheme.colors.onBackground,
+        topBar = {
+            AppBar(
+                modifier = Modifier.zIndex(-1F),
+                titleRes = R.string.detail,
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color.Transparent
+                ),
+                navigationIcon = Icons.Default.ArrowBack,
+                navigationIconContentDescription = "Back",
+                onNavigationClick = {navController.popBackStack()}
+            )
+        }
+    ) { padding ->
 
-    ErrorView(
-        isError = state.isError,
-        errorMessage = state.errorMsg
-    ) { viewModel.onEvent(DetailUiEvent.Retry) }
+        Loading(isLoading = state.isLoading)
 
-    ContentView(modifier, state)
+        ErrorView(
+            isError = state.isError,
+            errorMessage = state.errorMsg
+        ) { viewModel.onEvent(DetailUiEvent.Retry) }
+
+        ContentView(modifier.padding(padding), state)
+    }
 }
 
 @Composable

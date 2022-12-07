@@ -67,4 +67,5 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":ui:home"))
     implementation(project(":ui:detail"))
+    implementation(project(":ui:search"))
 }

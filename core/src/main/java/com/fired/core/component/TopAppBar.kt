@@ -3,7 +3,7 @@ package com.fired.core.component
 import android.R
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -57,9 +57,9 @@ fun AppBar(
 @Composable
 fun AppBar(
     @StringRes titleRes: Int,
+    modifier: Modifier = Modifier,
     actionIcon: ImageVector,
     actionIconContentDescription: String?,
-    modifier: Modifier = Modifier,
     colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(),
     onActionClick: () -> Unit = {}
 ) {
@@ -79,15 +79,42 @@ fun AppBar(
     )
 }
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppBar(
+    @StringRes titleRes: Int,
+    navigationIcon: ImageVector,
+    navigationIconContentDescription: String?,
+    modifier: Modifier = Modifier,
+    colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(),
+    onNavigationClick: () -> Unit = {}
+) {
+    CenterAlignedTopAppBar(
+        title = { Text(text = stringResource(id = titleRes)) },
+        navigationIcon = {
+            IconButton(onClick = onNavigationClick) {
+                Icon(
+                    imageVector = navigationIcon,
+                    contentDescription = navigationIconContentDescription,
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
+        },
+        colors = colors,
+        modifier = modifier,
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview("Top App Bar")
 @Composable
 fun TopAppBarPreview() {
     AppBar(
         titleRes = R.string.untitled,
-        navigationIcon = Icons.Default.Search,
+        navigationIcon = Icons.Default.Menu,
         navigationIconContentDescription = "Navigation icon",
-        actionIcon = Icons.Default.MoreVert,
+        actionIcon = Icons.Default.Search,
         actionIconContentDescription = "Action icon"
     )
 }

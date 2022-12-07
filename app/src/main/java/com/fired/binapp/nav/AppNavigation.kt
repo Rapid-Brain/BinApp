@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import com.fired.detail.nav.detailGraph
 import com.fired.home.nav.homeGraph
 import com.fired.home.nav.homeRoute
+import com.fired.search.nav.searchGraph
 
 /**
  * @author yaya (@yahyalmh)
@@ -25,6 +26,7 @@ fun AppNavigation(
         modifier = modifier,
     ) {
         homeGraph(navController)
-        detailGraph()
+        detailGraph(navController)
+        searchGraph(navController)
     }
 }

@@ -16,7 +16,7 @@ import javax.inject.Inject
 class ExchangeRateInteractorImpl @Inject constructor(private val exchangeRateRepository: ExchangeRateRepository) :
     ExchangeRateInteractor {
 
-    override fun getRates() = flow<List<ExchangeRate>> { exchangeRates() }.flowOn(Dispatchers.IO)
+    override fun getRates() = flow { emit(exchangeRates()) }.flowOn(Dispatchers.IO)
 
     override fun getLiveRates(interval: Long) =
         repeatFlow(interval) { exchangeRates() }.flowOn(Dispatchers.IO)

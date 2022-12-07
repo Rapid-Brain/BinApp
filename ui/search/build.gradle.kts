@@ -4,9 +4,8 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
 }
-
 android {
-    namespace = "com.fired.ui.home"
+    namespace = "com.fired.search"
     compileSdk = AppConfig.compileSdk
 
     defaultConfig {
@@ -32,6 +31,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
     }
@@ -45,11 +45,10 @@ dependencies {
     composeNavigation()
     composeViewmodel()
     composeMaterial()
-    composeConstraintlayout()
     hilt()
+    junit()
 
     implementation(project(":data:exchangerate"))
-    implementation(project(":core"))
     implementation(project(":ui:detail"))
-    implementation(project(":ui:search"))
+    implementation(project(":core"))
 }

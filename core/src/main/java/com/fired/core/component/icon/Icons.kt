@@ -1,5 +1,6 @@
 package com.fired.core.component.icon
 
+import android.hardware.camera2.params.Face
 import androidx.annotation.DrawableRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -22,6 +23,8 @@ object Icons {
     val PlayArrow = Icons.Rounded.PlayArrow
     val Search = Icons.Rounded.Search
     val Settings = Icons.Rounded.Settings
+    val ThumbUp = Icons.Rounded.ThumbUp
+    val Face = Icons.Rounded.Face
 }
 
 /**
