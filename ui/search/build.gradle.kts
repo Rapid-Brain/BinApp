@@ -1,26 +1,20 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
-
 }
 
 android {
-    namespace = AppConfig.namespace
-    compileSdk = AppConfig.compileSdk
+    namespace = "com.client.search"
+    compileSdk = 33
 
     defaultConfig {
-        applicationId = AppConfig.applicationId
-        minSdk = AppConfig.minSdk
-        targetSdk = AppConfig.targetSdk
-        versionCode = AppConfig.versionCode
-        versionName = AppConfig.versionName
+        minSdk = 21
+        targetSdk = 33
 
-        testInstrumentationRunner = AppConfig.androidTestInstrumentation
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -45,27 +39,16 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Version.KOTLIN_COMPILER_EXTENSION_VERSION
     }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
-    androidxCore()
-    lifecycle()
     compose()
-    composeMaterial()
     composeNavigation()
+    composeViewmodel()
+    composeMaterial()
     hilt()
     junit()
-    espresso()
-    composeTest()
-    retrofit()
 
+    implementation(project(":data:exchangerate"))
     implementation(project(":core"))
-    implementation(project(":ui:home"))
-    implementation(project(":ui:detail"))
-    implementation(project(":ui:search"))
 }

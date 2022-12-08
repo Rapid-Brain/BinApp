@@ -21,3 +21,4 @@ include(
     ":ui:detail",
     ":data:api"
 )
+include(":ui:search")
