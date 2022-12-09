@@ -22,3 +22,4 @@ include(
     ":data:api",
     ":ui:search",
 )
+include(":ui:common")

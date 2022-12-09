@@ -3,38 +3,40 @@ package com.fired.binapp.ui
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fired.binapp.R
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.fired.binapp.nav.AppNavigation
-import com.fired.core.component.AppBar
 import com.fired.core.network.NetworkMonitor
 
 /**
  * @author yaya (@yahyalmh)
  * @since 29th October 2022
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     networkMonitor: NetworkMonitor,
-    appState: AppState = rememberAppState(
-        networkMonitor = networkMonitor,
-    )
+//    appState: AppState = rememberAppState(
+//        networkMonitor = networkMonitor,
+//    ),
+    viewModel: MainViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state.value
+//    val navController: NavHostControlleler = rememberNavController()
+
     val snackbarHostState = remember { SnackbarHostState() }
     Column {
-        ObserveNetworkConnection(appState)
+        OutlinedButton(onClick = {viewModel.onEvent(MainUiEvent.ChangeThem(23)) }) {
+            Text(text = "Theme")
+        }
+        NetStatusView(state.showOnlineView, state.showOfflineView)
+
+//        ObserveNetworkConnection(appState)
 
 //        Scaffold(
 //            contentColor = MaterialTheme.colors.onBackground,
@@ -56,7 +58,7 @@ fun MainScreen(
 //        ) { padding ->
 //            SetupAppNavigation(appState, padding)
 //        }
-        SetupAppNavigation(appState)
+        SetupAppNavigation(viewModel.navController)
 
     }
 }
@@ -64,11 +66,11 @@ fun MainScreen(
 @Composable
 @OptIn(ExperimentalLayoutApi::class)
 private fun SetupAppNavigation(
-    appState: AppState,
+    navHostController: NavHostController,
     padding:PaddingValues= PaddingValues.Absolute()
 ) {
     AppNavigation(
-        navController = appState.navController,
+        navController = navHostController,
         modifier = Modifier
             .padding(padding)
             .consumedWindowInsets(padding)
@@ -82,5 +84,5 @@ private fun ObserveNetworkConnection(appState: AppState) {
 
     appState.isOnlineViewVisible = isOffline.not()
 
-    NetStatusView(appState, isOffline)
+//    NetStatusView(appState, isOffline)
 }

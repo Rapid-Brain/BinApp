@@ -1,5 +1,6 @@
 package com.fired.binapp.ui
 
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -8,8 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,19 +26,11 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun NetStatusView(
-    appState: AppState,
-    isOffline: Boolean,
+    showOnlineView: Boolean,
+    showOfflineView: Boolean,
 ) {
-    val hideOnlineViewDelay: Long = 2000
-    LaunchedEffect(isOffline) {
-        if (isOffline.not()) {
-            delay(hideOnlineViewDelay)
-            appState.isOnlineViewVisible = false
-        }
-    }
-
-    OfflineView(isOffline = isOffline)
-    OnlineView(appState.isOnlineViewVisible, isOnline = isOffline.not())
+    OfflineView(isOffline = showOfflineView)
+    OnlineView(isOnline = showOnlineView)
 }
 
 @Composable
@@ -76,7 +68,7 @@ fun OfflineView(isOffline: Boolean) {
 }
 
 @Composable
-fun OnlineView(isOnlineViewVisible: Boolean, isOnline: Boolean) {
+fun OnlineView(isOnline: Boolean) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -84,12 +76,10 @@ fun OnlineView(isOnlineViewVisible: Boolean, isOnline: Boolean) {
         verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.Center
     ) {
-
-
         val message = stringResource(id = R.string.online)
         val color = Color.Green
         AnimatedVisibility(
-            visible = isOnlineViewVisible && isOnline,
+            visible =  isOnline,
             enter = fadeIn(animationSpec = tween(500)) +
                     expandVertically(
                         animationSpec = tween(500)

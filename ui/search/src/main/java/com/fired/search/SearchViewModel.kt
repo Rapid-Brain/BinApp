@@ -1,6 +1,5 @@
 package com.fired.search
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.fired.core.base.BaseViewModel
 import com.fired.core.base.UIEvent
@@ -8,7 +7,6 @@ import com.fired.core.base.UIState
 import com.fired.rate.interactor.ExchangeRate
 import com.fired.rate.interactor.ExchangeRateInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -27,7 +25,7 @@ class SearchViewModel @Inject constructor(
     init {
         searchFlow
             .debounce(300)
-            //            .distinctUntilChanged()
+            .distinctUntilChanged()
             .onEach { query ->
                 if (::job.isInitialized && job.isActive) {
                     job.cancel()
@@ -38,7 +36,6 @@ class SearchViewModel @Inject constructor(
                     query.isNotResetState() -> searchQuery(query)
                 }
             }.launchIn(viewModelScope)
-        Log.d("TAGGGGGGG", "init: ")
     }
 
     private fun searchQuery(query: String) {

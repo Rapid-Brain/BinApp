@@ -1,9 +1,10 @@
 package com.fired.search
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -29,7 +30,6 @@ import androidx.navigation.NavController
 import com.fired.core.component.BaseLazyColumn
 import com.fired.core.component.Loading
 import com.fired.detail.nav.navigateToDetail
-import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun SearchScreen(
@@ -38,6 +38,7 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+
     Loading(isLoading = state.isLoading)
 
     RetryErrorView(
@@ -49,18 +50,40 @@ fun SearchScreen(
         viewModel.onEvent(SearchUiEvent.Retry)
     }
 
-    EmptyView(isEmpty = state.isEmpty)
-//    ContentView(state, viewModel.searchFlow){navController.popBackStack()}
+    EmptyView(modifier = modifier, isEmpty = state.isEmpty)
+
+
+    ContentView(
+        state = state,
+        onQueryChange = { query -> viewModel.onEvent(SearchUiEvent.QueryChange(query)) },
+        navigateToDetail = { id -> navController.navigateToDetail(id) }
+    ) { navController.popBackStack() }
+
+}
+
+
+@Composable
+private fun ContentView(
+    state: SearchUiState,
+    onQueryChange: (query: String) -> Unit,
+    navigateToDetail: (id: String) -> Unit,
+    onBackListener: () -> Unit
+) {
     Column {
-        SearchBar(viewModel) { navController.popBackStack() }
+
+        SearchBar(
+            onQueryChange = onQueryChange,
+            onCancelClick = onBackListener
+        )
+
         if (state is SearchUiState.Loaded) {
-            BaseLazyColumn(items = state.result, modifier = Modifier.padding(5.dp)) { rate ->
+            BaseLazyColumn(items = state.result) { rate ->
                 RateCell(
                     rate = rate.rateUsd.toString(),
                     symbol = rate.symbol,
                     currencySymbol = rate.currencySymbol ?: rate.symbol,
                     type = rate.type,
-                    onClick = { navController.navigateToDetail(rate.id) }
+                    onClick = { navigateToDetail(rate.id) }
                 )
             }
         }
@@ -68,30 +91,23 @@ fun SearchScreen(
 }
 
 @Composable
-private fun ContentView(
-    state: SearchUiState,
-    searchFlow: MutableStateFlow<String>,
-    onBackListener: () -> Unit
-) {
-
-}
-
-@Composable
-private fun SearchBar(viewModel: SearchViewModel, onCancelClick: () -> Unit) {
-    val query = viewModel.state.value.query
+private fun SearchBar(onQueryChange: (query: String) -> Unit, onCancelClick: () -> Unit) {
     val requester = FocusRequester()
+    var value by remember {
+        mutableStateOf("")
+    }
 
     Row(
-        modifier = Modifier.background(Color.Gray),
+        modifier = Modifier.background(MaterialTheme.colorScheme.surface),
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
             modifier = Modifier
                 .weight(1f)
-                .padding(start = 12.dp, top = 10.dp, end = 2.dp, bottom = 4.dp)
+                .padding(start = 4.dp)
                 .background(
-                    MaterialTheme.colorScheme.surface,
+                    MaterialTheme.colorScheme.secondary,
                     RoundedCornerShape(20)
                 )
                 .padding(6.dp),
@@ -102,33 +118,36 @@ private fun SearchBar(viewModel: SearchViewModel, onCancelClick: () -> Unit) {
                 modifier = Modifier.size(20.dp),
                 imageVector = Icons.Default.Search,
                 contentDescription = stringResource(id = R.string.search),
-                tint = MaterialTheme.colorScheme.onSurface
+//                tint = MaterialTheme.colorScheme.onSurface
             )
             BasicTextField(modifier = Modifier
                 .focusRequester(requester)
                 .weight(1f)
-                .background(
-                    MaterialTheme.colorScheme.surface,
-                    RoundedCornerShape(20)
-                ),
+                .padding(start = 2.dp)
+                .height(24.dp)
+                .background(color = Color.Transparent, shape = RoundedCornerShape(20)),
                 singleLine = true,
-                value = query,
-                onValueChange = { viewModel.onEvent(SearchUiEvent.QueryChange(it)) },
+                value = value,
+                onValueChange = {
+                    value = it
+                    onQueryChange(it)
+                },
                 decorationBox = { innerTextField ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(2.dp)
-                    ) {
+                            .padding(2.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+
+                        ) {
                         AnimatedVisibility(
-                            visible = query.isEmpty(),
+                            visible = value.isEmpty(),
                             enter = fadeIn(initialAlpha = 0.3f),
                             exit = fadeOut()
                         ) {
                             Text(
                                 text = "Search Currencies",
-                                color = if (isSystemInDarkTheme()) Color(0xFF969EBD) else Color.Gray,
-                                fontSize = 14.sp
+                                color = MaterialTheme.colorScheme.onSecondary,
                             )
                         }
                     }
@@ -136,36 +155,44 @@ private fun SearchBar(viewModel: SearchViewModel, onCancelClick: () -> Unit) {
                 }
             )
             AnimatedVisibility(
-                visible = query.isNotEmpty(),
+                visible = value.isNotEmpty(),
                 enter = fadeIn(initialAlpha = 0.3f),
                 exit = fadeOut()
             ) {
                 Icon(
                     modifier = Modifier
-                        .clickable { viewModel.onEvent(SearchUiEvent.ClearSearch) }
+                        .clickable {
+                            value = ""
+                            onQueryChange(value)
+                        }
                         .size(20.dp),
                     imageVector = Icons.Default.Close,
                     contentDescription = stringResource(id = R.string.search),
-                    tint = MaterialTheme.colorScheme.onSurface
+//                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
         TextButton(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(end = 4.dp),
+                .padding(start = 4.dp, end = 4.dp),
             contentPadding = PaddingValues(4.dp),
             onClick = onCancelClick
         ) {
             Text(color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp, text = "Cancel")
         }
     }
+    Spacer(
+        modifier = Modifier
+            .height(1.dp)
+            .background(MaterialTheme.colorScheme.onPrimary)
+    )
     SideEffect { requester.requestFocus() }
-
 }
 
 @Preview
 @Composable
-fun ContentPreview() {
-//    ContentView(){}
+fun SearchPreview() {
+    SearchBar(onQueryChange = {}) {}
 }
+
