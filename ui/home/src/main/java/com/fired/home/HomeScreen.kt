@@ -63,6 +63,13 @@ fun HomeScreen(
             viewModel.onEvent(HomeUiEvent.Retry)
         }
 
+        AutoRetryView(
+            isVisible = state.isAutoRetry,
+            errorMessage = state.retryMsg,
+            icon = com.fired.core.component.icon.Icons.Face,
+            hint = stringResource(id = coreStrings.autoRetryHint)
+        )
+
         ContentView(
             isVisible = state is HomeUiState.Loaded,
             modifier = modifier.padding(padding),

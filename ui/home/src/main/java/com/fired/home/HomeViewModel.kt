@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.fired.core.base.BaseViewModel
 import com.fired.core.base.UIEvent
 import com.fired.core.base.UIState
+import com.fired.core.ext.retryWithPolicy
 import com.fired.home.util.Constant
 import com.fired.rate.interactor.ExchangeRate
 import com.fired.rate.interactor.ExchangeRateInteractor
@@ -30,6 +31,7 @@ class HomeViewModel @Inject constructor(
     private fun fetchRates() {
         exchangeRateInteractor
             .getLiveRates(Constant.liveRateFetchInterval)
+            .retryWithPolicy { handleRetry() }
             .catch { e -> handleError(e) }
             .onEach {
                 setState(HomeUiState.Loaded(rates = it))
@@ -39,6 +41,11 @@ class HomeViewModel @Inject constructor(
     private fun handleError(e: Throwable) {
         val errorMessage = e.message ?: "Error while fetching the exchange rates"
         setState(HomeUiState.Retry(retryMsg = errorMessage))
+    }
+
+    private fun handleRetry() {
+        val retryMsg = "Loading data is failed"
+        setState(HomeUiState.AutoRetry(retryMsg))
     }
 
     override fun onEvent(event: HomeUiEvent) {

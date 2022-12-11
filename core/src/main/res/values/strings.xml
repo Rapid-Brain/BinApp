@@ -5,4 +5,5 @@
     <string name="menu">Menu</string>
     <string name="emptyIcon">Empty Icon</string>
     <string name="autoRetryIcon">Auto Retry Icon</string>
+    <string name="autoRetryHint">Go online and try again</string>
 </resources>

@@ -4,14 +4,13 @@ import androidx.lifecycle.viewModelScope
 import com.fired.core.base.BaseViewModel
 import com.fired.core.base.UIEvent
 import com.fired.core.base.UIState
+import com.fired.core.ext.retryWithPolicy
 import com.fired.rate.interactor.ExchangeRate
 import com.fired.rate.interactor.ExchangeRateInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
-import java.io.IOException
 import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
@@ -27,9 +26,7 @@ class SearchViewModel @Inject constructor(
             .debounce(300)
             .distinctUntilChanged()
             .onEach { query ->
-                if (::job.isInitialized && job.isActive) {
-                    job.cancel()
-                }
+                if (::job.isInitialized && job.isActive) { job.cancel() }
 
                 when {
                     query.isBlank() && query.isEmpty() -> setState(SearchUiState.Empty())
@@ -41,7 +38,7 @@ class SearchViewModel @Inject constructor(
     private fun searchQuery(query: String) {
         job = exchangeRateInteractor
             .getRates()
-            .retryWithPolicy(DefaultRetryPolicy()) { handleRetry() }
+            .retryWithPolicy { handleRetry() }
             .catch { e -> handleError(e) }
             .map { exchangeRates ->
                 exchangeRates.filter {
@@ -57,7 +54,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun handleError(e: Throwable) {
-//        searchFlow.value = restString
+        searchFlow.value = restString
         val errorMessage = e.message ?: "Error while fetching the exchange rate"
         setState(SearchUiState.Error(errorMessage, query = state.value.query))
     }
@@ -86,37 +83,7 @@ class SearchViewModel @Inject constructor(
 }
 
 fun String.isNotResetState() = this != restString
-const val restString = "___"
-
-fun <T> Flow<T>.retryWithPolicy(
-    retryPolicy: RetryPolicy,
-    retryHandler: () -> Unit
-): Flow<T> {
-    var currentDelay = retryPolicy.delayMillis
-    val delayFactor = retryPolicy.delayFactor
-    return retryWhen { cause, attempt ->
-        retryHandler()
-        if (cause is IOException && attempt < retryPolicy.numRetries) {
-            delay(currentDelay)
-            currentDelay *= delayFactor
-            return@retryWhen true
-        } else {
-            return@retryWhen false
-        }
-    }
-}
-
-interface RetryPolicy {
-    val numRetries: Long
-    val delayMillis: Long
-    val delayFactor: Long
-}
-
-data class DefaultRetryPolicy(
-    override val numRetries: Long = 6,
-    override val delayMillis: Long = 600,
-    override val delayFactor: Long = 1
-) : RetryPolicy
+const val restString = "__ResetString__"
 
 sealed interface SearchUiEvent : UIEvent {
     object Retry : SearchUiEvent

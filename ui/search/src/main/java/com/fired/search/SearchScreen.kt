@@ -12,6 +12,7 @@ import com.fired.core.component.bar.SearchBar
 import com.fired.core.component.icon.Icons
 import com.fired.detail.nav.navigateToDetail
 
+typealias coreString = com.fired.core.R.string
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
@@ -26,7 +27,7 @@ fun SearchScreen(
         isVisible = state.isAutoRetry,
         errorMessage = state.retryMsg,
         icon = Icons.Face,
-        hint = stringResource(id = R.string.autoRetryHint)
+        hint = stringResource(id = coreString.autoRetryHint)
     )
 
     RetryView(
@@ -39,6 +40,7 @@ fun SearchScreen(
         modifier = modifier, isVisible = state.isEmpty, icon = Icons.Face,
         message = stringResource(id = R.string.noItemFound)
     )
+
     Column {
         SearchBar(onQueryChange = { query -> viewModel.onEvent(SearchUiEvent.QueryChange(query)) },
             onCancelClick = { navController.popBackStack() })
