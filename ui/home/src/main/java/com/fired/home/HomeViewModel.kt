@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val exchangeRateInteractor: ExchangeRateInteractor
-) : BaseViewModel<HomeUiState, HomeUiEvent>(HomeUiState.initState) {
+) : BaseViewModel<HomeUiState, HomeUiEvent>(HomeUiState.Loading) {
 
     init {
         fetchRates()
@@ -30,49 +30,42 @@ class HomeViewModel @Inject constructor(
     private fun fetchRates() {
         exchangeRateInteractor
             .getLiveRates(Constant.liveRateFetchInterval)
-            .catch { e -> handleCatch(e) }
+            .catch { e -> handleError(e) }
             .onEach {
-                setState(state.value.copy(rates = it, isError = false, isLoading = false))
+                setState(HomeUiState.Loaded(rates = it))
             }.launchIn(viewModelScope)
     }
 
-    private fun handleCatch(e: Throwable) {
+    private fun handleError(e: Throwable) {
         val errorMessage = e.message ?: "Error while fetching the exchange rates"
-        setState(
-            state.value.copy(
-                isLoading = false,
-                isError = true,
-                errorMessage = errorMessage
-            )
-        )
+        setState(HomeUiState.Retry(retryMsg = errorMessage))
     }
 
     override fun onEvent(event: HomeUiEvent) {
         when (event) {
             HomeUiEvent.Retry -> {
                 fetchRates()
-                setState(
-                    state.value.copy(isLoading = true, isError = false)
-                )
+                setState(HomeUiState.Loading)
             }
         }
     }
 }
 
-data class HomeUiState(
-    val rates: List<ExchangeRate>,
-    val isLoading: Boolean,
-    val isError: Boolean,
-    val errorMessage: String,
+sealed class HomeUiState(
+    val rates: List<ExchangeRate> = emptyList(),
+    val isLoading: Boolean = false,
+    val isRetry: Boolean = false,
+    val retryMsg: String = "",
+    val isAutoRetry: Boolean = false,
+    val autoRetryMsg: String = "",
 ) : UIState {
-    companion object {
-        val initState = HomeUiState(
-            rates = emptyList(),
-            isLoading = true,
-            isError = false,
-            errorMessage = ""
-        )
-    }
+    object Loading : HomeUiState(isLoading = true)
+
+    class Retry(retryMsg: String) : HomeUiState(isRetry = true, retryMsg = retryMsg)
+
+    class AutoRetry(autoRetryMsg: String) : HomeUiState(isAutoRetry = true, retryMsg = autoRetryMsg)
+
+    class Loaded(rates: List<ExchangeRate>) : HomeUiState(rates = rates)
 }
 
 sealed interface HomeUiEvent : UIEvent {

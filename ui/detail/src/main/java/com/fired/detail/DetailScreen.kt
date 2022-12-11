@@ -8,6 +8,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -22,9 +23,9 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fired.core.base.ReferenceDevices
-import com.fired.core.component.AppBar
-import com.fired.core.component.ErrorView
-import com.fired.core.component.Loading
+import com.fired.core.component.LoadingView
+import com.fired.core.component.RetryView
+import com.fired.core.component.bar.AppBar
 import com.fired.rate.interactor.ExchangeDetailRate
 
 /**
@@ -57,11 +58,12 @@ fun DetailScreen(
         }
     ) { padding ->
 
-        Loading(isLoading = state.isLoading)
+        LoadingView(isLoading = state.isLoading)
 
-        ErrorView(
-            isError = state.isError,
-            errorMessage = state.errorMsg
+        RetryView(
+            isVisible = state.isError,
+            errorMessage = state.errorMsg,
+            icon = Icons.Default.Close
         ) { viewModel.onEvent(DetailUiEvent.Retry) }
 
         ContentView(modifier.padding(padding), state)

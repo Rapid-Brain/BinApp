@@ -52,4 +52,5 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":ui:detail"))
     implementation(project(":ui:search"))
+    moduleDependency(":ui:common")
 }

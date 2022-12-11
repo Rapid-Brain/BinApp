@@ -3,11 +3,13 @@ package com.fired.search
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.fired.core.component.BaseLazyColumn
-import com.fired.core.component.Loading
-import com.fired.core.component.SearchBar
+import com.example.common.RateCell
+import com.fired.core.component.*
+import com.fired.core.component.bar.SearchBar
+import com.fired.core.component.icon.Icons
 import com.fired.detail.nav.navigateToDetail
 
 @Composable
@@ -18,50 +20,49 @@ fun SearchScreen(
 ) {
     val state = viewModel.state.value
 
-    Loading(isLoading = state.isLoading)
+    LoadingView(isLoading = state.isLoading)
 
-    RetryErrorView(
-        isError = state.isRetry,
-        errorMessage = state.retryMsg
+    AutoRetryView(
+        isVisible = state.isAutoRetry,
+        errorMessage = state.retryMsg,
+        icon = Icons.Face,
+        hint = stringResource(id = R.string.autoRetryHint)
     )
 
-    ErrorView(errorMessage = state.errorMsg, isError = state.isError) {
-        viewModel.onEvent(SearchUiEvent.Retry)
+    RetryView(
+        isVisible = state.isRetry,
+        errorMessage = state.errorMsg,
+        icon = Icons.Face
+    ) { viewModel.onEvent(SearchUiEvent.Retry) }
+
+    EmptyView(
+        modifier = modifier, isVisible = state.isEmpty, icon = Icons.Face,
+        message = stringResource(id = R.string.noItemFound)
+    )
+    Column {
+        SearchBar(onQueryChange = { query -> viewModel.onEvent(SearchUiEvent.QueryChange(query)) },
+            onCancelClick = { navController.popBackStack() })
+
+        ContentView(
+            state = state,
+            navigateToDetail = { id -> navController.navigateToDetail(id) }
+        )
     }
 
-    EmptyView(modifier = modifier, isEmpty = state.isEmpty)
-
-
-    ContentView(
-        state = state,
-        onQueryChange = { query -> viewModel.onEvent(SearchUiEvent.QueryChange(query)) },
-        navigateToDetail = { id -> navController.navigateToDetail(id) }
-    ) { navController.popBackStack() }
-
 }
-
 
 @Composable
 private fun ContentView(
     state: SearchUiState,
-    onQueryChange: (query: String) -> Unit,
     navigateToDetail: (id: String) -> Unit,
-    onBackListener: () -> Unit
 ) {
-    Column {
-
-        SearchBar(onQueryChange = onQueryChange, onCancelClick = onBackListener)
-
-        if (state is SearchUiState.Loaded) {
-            BaseLazyColumn(items = state.result) { rate ->
-                RateCell(
-                    rate = rate.rateUsd.toString(),
-                    symbol = rate.symbol,
-                    currencySymbol = rate.currencySymbol ?: rate.symbol,
-                    type = rate.type,
-                    onClick = { navigateToDetail(rate.id) }
-                )
-            }
-        }
+    BaseLazyColumn(isVisible = state is SearchUiState.Loaded, items = state.result) { rate ->
+        RateCell(
+            rate = rate.rateUsd.toString(),
+            symbol = rate.symbol,
+            currencySymbol = rate.currencySymbol ?: rate.symbol,
+            type = rate.type,
+            onClick = { navigateToDetail(rate.id) }
+        )
     }
 }

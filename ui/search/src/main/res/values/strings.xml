@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="search">Search</string>
+    <string name="noItemFound">No Item Found</string>
+    <string name="autoRetryHint">Go online and try again</string>
 </resources>

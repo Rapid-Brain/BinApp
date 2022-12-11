@@ -2,4 +2,7 @@
 <resources>
     <string name="txt_retry">Retry</string>
     <string name="search">Search</string>
+    <string name="menu">Menu</string>
+    <string name="emptyIcon">Empty Icon</string>
+    <string name="autoRetryIcon">Auto Retry Icon</string>
 </resources>

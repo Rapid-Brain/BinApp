@@ -1,4 +1,4 @@
-package com.fired.core.component
+package com.fired.core.component.bar
 
 import android.R
 import androidx.annotation.StringRes

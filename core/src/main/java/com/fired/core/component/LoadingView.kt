@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
  */
 
 @Composable
-fun Loading(isLoading: Boolean) {
+fun LoadingView(isLoading: Boolean) {
     if (isLoading) {
         BaseCenterColumn { CircularProgressIndicator() }
     }
@@ -19,5 +19,5 @@ fun Loading(isLoading: Boolean) {
 @Preview(showBackground = true)
 @Composable
 fun LoadingPreview() {
-    Loading(isLoading = true)
+    LoadingView(isLoading = true)
 }

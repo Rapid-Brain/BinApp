@@ -1,6 +1,7 @@
-package com.fired.core.component
+package com.fired.core.component.bar
 
-import android.content.res.Configuration.*
+import android.content.res.Configuration.UI_MODE_NIGHT_MASK
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut

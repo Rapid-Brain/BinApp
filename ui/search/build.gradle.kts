@@ -51,4 +51,5 @@ dependencies {
     implementation(project(":data:exchangerate"))
     implementation(project(":ui:detail"))
     implementation(project(":core"))
+    moduleDependency(":ui:common")
 }

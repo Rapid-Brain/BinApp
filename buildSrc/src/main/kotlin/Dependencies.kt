@@ -1,5 +1,6 @@
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
+import org.gradle.kotlin.dsl.project
 
 /**
  * @author yaya (@yahyalmh)
@@ -122,6 +123,10 @@ fun DependencyHandler.hilt() {
 fun DependencyHandler.junit() {
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_JUNIT)
+}
+
+fun DependencyHandler.moduleDependency(path: String) {
+    implementation(project(path))
 }
 
 fun DependencyHandler.espresso() = androidTestImplementation(Dependencies.ANDROIDX_ESPRESSO_CORE)

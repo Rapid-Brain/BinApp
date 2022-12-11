@@ -21,5 +21,5 @@ include(
     ":ui:detail",
     ":data:api",
     ":ui:search",
+    ":ui:common",
 )
-include(":ui:common")

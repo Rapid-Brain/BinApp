@@ -127,8 +127,8 @@ sealed interface SearchUiEvent : UIEvent {
 sealed class SearchUiState(
     val result: List<ExchangeRate> = emptyList(),
     val isLoading: Boolean = false,
-    val isError: Boolean = false,
     val isRetry: Boolean = false,
+    val isAutoRetry: Boolean = false,
     val isEmpty: Boolean = false,
     val errorMsg: String = "",
     val retryMsg: String = "",
@@ -137,18 +137,18 @@ sealed class SearchUiState(
     class Loading(query: String) : SearchUiState(isLoading = true, query = query)
 
     class Error(errorMsg: String, query: String) : SearchUiState(
-        isError = true,
+        isRetry = true,
         errorMsg = errorMsg,
         query = query
     )
 
     class Retry(retryMsg: String, query: String) : SearchUiState(
-        isRetry = true,
+        isAutoRetry = true,
         retryMsg = retryMsg,
         query = query
     )
 
-    class Search(val text: String) : SearchUiState(query = text, isLoading = true)
+    class Search(text: String) : SearchUiState(query = text, isLoading = true)
 
     class Empty(query: String = "") : SearchUiState(isEmpty = true, query = query)
 

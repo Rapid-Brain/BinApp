@@ -1,4 +1,4 @@
-package com.fired.search
+package com.example.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,10 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fired.rate.interactor.ExchangeRate
 
 @Composable
-internal fun RateCell(
+fun RateCell(
     rate: String,
     symbol: String,
     currencySymbol: String,
@@ -89,23 +88,11 @@ private fun Content(
 @Preview
 @Composable
 fun RateCellPreview() {
-    val rate = rateStub()
     RateCell(
-        rate = rate.rateUsd.toString(),
-        symbol = rate.symbol,
-        currencySymbol = rate.currencySymbol.toString(),
-        type = rate.type,
+        rate = "3.343234342",
+        symbol = "$$",
+        currencySymbol = "USD",
+        type = "Fiat",
         onClick = {}
-    )
-}
-
-@Composable
-internal fun rateStub(): ExchangeRate {
-    return ExchangeRate(
-        id = "1",
-        symbol = "$",
-        currencySymbol = "#",
-        type = "fiat",
-        rateUsd = 0.165451654889.toBigDecimal()
     )
 }
