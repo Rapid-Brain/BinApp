@@ -45,6 +45,8 @@ dependencies {
     composeNavigation()
     composeViewmodel()
     composeMaterial()
+    junit()
+
     composeConstraintlayout()
     hilt()
 
