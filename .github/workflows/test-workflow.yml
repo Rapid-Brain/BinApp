@@ -13,4 +13,3 @@ jobs:
         with:
           project-path: ./
           output-path: my-app.apk
-          browserstack-upload: true
