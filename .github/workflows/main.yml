@@ -1,0 +1,10 @@
+name: Test Workflow
+on: workflow_dispatch # workflow should run by user
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Gretting
+        run: echo "Hello world!"
+      - name: Print Goodbye
+        run: echo "Goodbye world!"
