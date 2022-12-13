@@ -1,4 +1,4 @@
-name: First Workflow
+name: Test Workflow
 on: workflow_dispatch # workflow should run by user
 jobs:
   first-job:
