@@ -11,7 +11,7 @@ jobs:
       - name: Build App
         uses: sparkfabrik/android-build-action@v1.0.0
         with:
-          project-path: /
+          project-path: ./
           output-path: my-app.apk
           browserstack-upload: true
           browserstack-username: ${{ secrets.BROWSERSTACK_USERNAME }}
