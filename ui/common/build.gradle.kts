@@ -40,5 +40,6 @@ android {
 
 dependencies {
     compose()
+    junit()
     composeMaterial()
 }
