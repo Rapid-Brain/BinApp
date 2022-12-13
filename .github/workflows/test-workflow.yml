@@ -1,0 +1,19 @@
+name: Test Workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Run tests
+          run: ./gradlew test
+      - name: Build App
+        uses: sparkfabrik/android-build-action@v1.0.0
+          with:
+            build-type: assemble
+            project-path: android
+            output-path: my-app.apk
+            browserstack-upload: true
+            browserstack-username: ${{ secrets.BROWSERSTACK_USERNAME }}
+            browserstack-access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
