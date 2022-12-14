@@ -1,13 +1,23 @@
 name: Test Workflow
 on: [push, workflow_dispatch]
 jobs:
+  Lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Run Lint
+        run: ./gradlew lint
+
   Test:
+    needs: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
       - name: Run tests
         run: ./gradlew test
+
   Build:
     needs: Test # it will be run after test job, we can use a list of jobs here.
     runs-on: ubuntu-latest
