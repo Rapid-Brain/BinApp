@@ -9,6 +9,7 @@ jobs:
       - name: Run tests
         run: ./gradlew test
   Build:
+    needs: Test # it will be run after test job, we can use a list of jobs here.
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
