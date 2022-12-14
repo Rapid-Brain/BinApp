@@ -1,7 +1,16 @@
 name: Test Workflow
 on: [push, workflow_dispatch]
 jobs:
+  Detekt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Run Detekt
+        uses: natiginfo/action-detekt-all@1.22.0
+
   Lint:
+    needs: Detekt
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
