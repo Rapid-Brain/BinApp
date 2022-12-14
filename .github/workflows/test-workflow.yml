@@ -1,5 +1,5 @@
 name: Test Workflow
-on: push
+on: [push, workflow_dispatch]
 jobs:
   Test:
     runs-on: ubuntu-latest
